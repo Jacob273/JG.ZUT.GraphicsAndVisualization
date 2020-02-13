@@ -7,3 +7,5 @@ A project related to computer graphics and visualization for educational purpose
 * Manipulation and use of components provided by Unity
 
 
+![First scene created in Unity environment](./firstScene.jpg)
+
