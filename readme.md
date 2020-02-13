@@ -9,3 +9,5 @@ A project related to computer graphics and visualization for educational purpose
 
 ![First scene created in Unity environment](./firstScene.jpg)
 
+
+![Planetary system implemented with matrices](./planetarySystemWithMatricesImplementation.gif)
