@@ -6,9 +6,14 @@ A project related to computer graphics and visualization for educational purpose
 
 * Manipulation and use of components provided by Unity
   
-  ### First scene
+  ### 1. My very first unity scene
   ![First scene created in Unity environment](./firstScene.jpg)
 
-  ### Planetary system rotation implemented with "low level" matrices
+  ### 2. Dummy planetary system with "low level" matrices implementation movement
 
   ![Planetary system implemented with matrices](./planetarySystemWithMatricesImplementation.gif)
+
+
+  ### 3. Moving characters - (1st Game)
+
+  ![Planetary system implemented with matrices](./moving_first_characters.jpg)
