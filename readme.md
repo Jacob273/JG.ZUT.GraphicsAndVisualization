@@ -1,10 +1,10 @@
-A project related to computer graphics and visualization for educational purposes, a part of this project will be:
+A project related to computer graphics and visualization for educational purposes, a part of this project is:
 
-* Creation of scenes in Unity
+* Learn how to create scenes in Unity
 
-* Implementation of C# scripts to transform unity objects (transformation matrices: rotation, scale, translation)
+* Implement C# "scripts" to transform Unity objects with low level matrices (transformation matrices: rotation, scale, translation)
 
-* Manipulation and use of components provided by Unity
+* Getting to know Unity API & components possibilities
   
   ### 1. My very first unity scene
   ![First scene created in Unity environment](./firstScene.jpg)
