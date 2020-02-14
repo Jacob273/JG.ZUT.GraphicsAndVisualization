@@ -1,10 +1,10 @@
 A project related to computer graphics and visualization for educational purposes, a part of this project is:
 
-* Learn how to create scenes in Unity
+* To learn how to create scenes in Unity
 
-* Implement C# "scripts" to transform Unity objects with low level matrices (transformation matrices: rotation, scale, translation)
+* To implement C# "scripts" to transform Unity objects with low level matrices (transformation matrices: rotation, scale, translation)
 
-* Getting to know Unity API & components possibilities
+* To glearn the basics of Unity API & their components
   
   ### 1. My very first unity scene
   ![First scene created in Unity environment](./firstScene.jpg)
