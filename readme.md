@@ -5,9 +5,10 @@ A project related to computer graphics and visualization for educational purpose
 * Implementation of C# scripts to transform unity objects (transformation matrices: rotation, scale, translation)
 
 * Manipulation and use of components provided by Unity
+  
+  ### First scene
+  ![First scene created in Unity environment](./firstScene.jpg)
 
+  ### Planetary system rotation implemented with "low level" matrices
 
-![First scene created in Unity environment](./firstScene.jpg)
-
-
-![Planetary system implemented with matrices](./planetarySystemWithMatricesImplementation.gif)
+  ![Planetary system implemented with matrices](./planetarySystemWithMatricesImplementation.gif)
