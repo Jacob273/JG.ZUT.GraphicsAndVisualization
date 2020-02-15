@@ -15,5 +15,7 @@ A project related to computer graphics and visualization for educational purpose
 
 
   ### 3. Moving characters - (1st Game)
+  https://youtu.be/NXXp_SsAqlU
+  
 
   ![Planetary system implemented with matrices](./moving_first_characters.jpg)
