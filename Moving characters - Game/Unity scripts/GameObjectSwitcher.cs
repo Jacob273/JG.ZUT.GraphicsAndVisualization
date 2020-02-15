@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace Assets.JakubGmur.Scripts
 {
@@ -7,9 +8,11 @@ namespace Assets.JakubGmur.Scripts
     {
         public Camera camera1;
         public Camera camera2;
+        public Camera camera3;
 
         public GameObject gameObjMovedByController;
         public GameObject gameObjMovedByForce;
+        public GameObject gameObjThirdPartyFromAssetsStore;
 
         private MovementController characterController;
         private MovementForce movedByForce;
@@ -30,46 +33,57 @@ namespace Assets.JakubGmur.Scripts
                 cameras.Add(camera2);
             }
 
+            if(camera3 != null)
+            {
+                cameras.Add(camera3);
+            }
+
             characterController = gameObjMovedByController.GetComponentInChildren<MovementController>();
             movedByForce = gameObjMovedByForce.GetComponentInChildren<MovementForce>();
 
-            if(characterController != null)
-            {
-                Debug.Log("Well done!");
-            }
-
-            if(movedByForce != null)
-            {
-                Debug.Log("Well done!");
-            }
-
-            HandleClick1();
+            TurnOnPlayer3FromAssetsStore();
         }
 
         void Update()
         {
-            HandleClick1();
-            HandleClick2();
+            TurnOnPlayer1ControlledByCharacterController();
+            TurnOnPlayer2ControlledByForce();
+            TurnOnPlayer3FromAssetsStore();
         }
 
-        private void HandleClick2()
+        private void TurnOnPlayer3FromAssetsStore()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                DisableAllCamerasExcept(camera3);
+                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<ThirdPersonUserControl>().enabled = true;
+                movedByForce.movingLogicShouldExecute = false;
+                characterController.logicShouldExecute = false;
+                movedByForce.enabled = false;
+                characterController.enabled = false;
+            }
+        }
+
+        private void TurnOnPlayer2ControlledByForce()
         {
             if (Input.GetKeyUp(KeyCode.Alpha2))
             {
                 DisableAllCamerasExcept(camera2);
                 characterController.logicShouldExecute = false;
+                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<ThirdPersonUserControl>().enabled = false;
 
                 movedByForce.enabled = true;
-                movedByForce.logicShouldExecute = true;
+                movedByForce.movingLogicShouldExecute = true;
             }
         }
 
-        private void HandleClick1()
+        private void TurnOnPlayer1ControlledByCharacterController()
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 DisableAllCamerasExcept(camera1);
-                movedByForce.logicShouldExecute = false;
+                movedByForce.movingLogicShouldExecute = false;
+                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<ThirdPersonUserControl>().enabled = false;
 
                 characterController.enabled = true;
                 characterController.logicShouldExecute = true;
