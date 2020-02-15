@@ -5,64 +5,102 @@ public class MovementForce : MonoBehaviour
     public float forceValueFactor = 10.0f;
     public float jumpForceValue = 10.0f;
 
-    public Rigidbody rigidBody;
-    public float gravity = 9.8f;
-    public bool logicShouldExecute;
+    /// <summary>
+    /// Element ktorym sterujemy przy pomocy manipulacji sila.
+    /// </summary>
+    public Rigidbody rigidBodyToControl;
 
+    /// <summary>
+    /// Grawitacja obiektu
+    /// </summary>
+    public float objectGravity = 9.8f;
 
-    private Vector3 indicatedForce = new Vector3(0, 0, 0);
-    private bool isGrounded;
-    void Start()
+    /// <summary>
+    /// Flaga mowiaca o tym, czy logika zwiazana z ruchem i i pobieraniem wartosci od uzytkwonika powinna sie wykonywac.
+    /// </summary>
+    public bool movingLogicShouldExecute;
+
+    /// <summary>
+    /// Wektor sily dodawany do poruszanego obiektu.
+    /// </summary>
+    protected Vector3 indicatedForce = new Vector3(0, 0, 0);
+
+    /// <summary>
+    /// Zmienna mowiaca o tym, czy obiekt jest na ziemi czy w powietrzu.
+    /// </summary>
+    protected bool isGrounded;
+
+    protected float horizontalValue, verticalValue;
+    /// <summary>
+    /// Metoda-Entry pobierajaca podpiety komponent.
+    /// </summary>
+    public virtual void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
-        rigidBody.freezeRotation = true;
+        rigidBodyToControl = GetComponent<Rigidbody>();
+        rigidBodyToControl.freezeRotation = true;
     }
 
     /// <summary>
-    /// Update runs once per frame. 
-    /// FixedUpdate can run once, zero, or several times per frame, depending on how many physics 
-    /// frames per second are set in the time settings, and how fast/slow the framerate is.
+    /// Aktualizacja stanu obiektu - w metodzie Update() uruchamiana w trakcie jednego odswiezenia ramki.
+    /// Aktualizacja FixedUpdate() moze natomiast dzialac raz, zero lub pare razy zaleznie od konfiguracji i 
+    /// tego jak duza czestotliwosc.
     /// </summary>
-    void FixedUpdate()
+    public virtual void FixedUpdate()
     {
-        if (logicShouldExecute)
+        if (movingLogicShouldExecute)
         {
             if (isGrounded)
             {
-                float horizontalValue, verticalValue;
-                GetInput(out horizontalValue, out verticalValue);
-
-                GenerateVerticalForceVector(horizontalValue, verticalValue);
-
-                Vector3 currentForce = rigidBody.velocity;
-                Vector3 forceChange = indicatedForce - currentForce;
-                forceChange.y = 0;
-
-                //Debug.Log($"we_want_x::::{indicatedForce.x} we_want_y::::{indicatedForce.y} we_want_z:::{indicatedForce.z}");
-                //Debug.Log($"curr_x::::{currentForce.x} curr_y::::{currentForce.y} curr_z:::{currentForce.z}");
-                //Debug.Log($"we_set_x::::{forceChange.x} we_set_y::::{forceChange.y} we_set_z:::{forceChange.z}");
-
-                IncludeJumpIfPressedOnMovingVector();
-                IncludeHorizontalRotationIfPressed(horizontalValue);
-                rigidBody.AddForce(forceChange, ForceMode.VelocityChange);
+                SetInputLocalFromAxis();
+                MoveWithForce(horizontalValue, verticalValue);
             }
 
-            rigidBody.AddForce(new Vector3(0, -gravity * rigidBody.mass, 0));
+            rigidBodyToControl.AddForce(new Vector3(0, -objectGravity * rigidBodyToControl.mass, 0));
             isGrounded = false;
         }
 
     }
 
+    private void MoveWithForce(float horizontalValue, float verticalValue)
+    {
+        GenerateVerticalForceVector(horizontalValue, verticalValue);
+
+        Vector3 currentForce = rigidBodyToControl.velocity;
+        Vector3 forceChange = indicatedForce - currentForce;
+        forceChange.y = 0;
+
+        IncludeJumpIfPressedOnMovingVector();
+        IncludeHorizontalRotationIfPressed(horizontalValue);
+        rigidBodyToControl.AddForce(forceChange, ForceMode.VelocityChange);
+    }
+
     private void IncludeHorizontalRotationIfPressed(float horizontalValue)
     {
         Quaternion deltaRotation = Quaternion.Euler(new Vector3(0, horizontalValue, 0));
-        rigidBody.MoveRotation(rigidBody.rotation * deltaRotation);
+        rigidBodyToControl.MoveRotation(rigidBodyToControl.rotation * deltaRotation);
     }
 
-    private static void GetInput(out float horizontalValue, out float verticalValue)
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SetInput(float horizontalValue, float verticalValue)
     {
-        horizontalValue = Input.GetAxis("Horizontal");
-        verticalValue = Input.GetAxis("Vertical");
+        this.horizontalValue = horizontalValue;
+        this.verticalValue = verticalValue;
+    }
+
+    public virtual void SetInputLocalFromAxis()
+    {
+        SetInput(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+    }
+
+    public virtual void IncludeJumpIfPressedOnMovingVector()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            rigidBodyToControl.velocity = new Vector3(indicatedForce.x, jumpForceValue, indicatedForce.z);
+        }
     }
 
 
@@ -71,14 +109,6 @@ public class MovementForce : MonoBehaviour
         indicatedForce = new Vector3(0.0f, 0.0f, verticalValue);
         indicatedForce = transform.TransformDirection(indicatedForce);//from local to world
         indicatedForce *= forceValueFactor;
-    }
-
-    private void IncludeJumpIfPressedOnMovingVector()
-    {
-        if (Input.GetButton("Jump"))
-        {
-            rigidBody.velocity = new Vector3(indicatedForce.x, jumpForceValue, indicatedForce.z);
-        }
     }
 
     void OnCollisionStay()
