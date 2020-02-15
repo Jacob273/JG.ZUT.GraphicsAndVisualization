@@ -3,6 +3,7 @@ using UnityEngine;
 public class MovementController : MonoBehaviour
 {
 
+    public GameObject objectToBeMoved;
     CharacterController characterController;
 
     public float movementSpeed = 5.5f;
@@ -17,23 +18,29 @@ public class MovementController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
+        if(objectToBeMoved != null)
+        {
+            characterController = objectToBeMoved.GetComponent<CharacterController>();
+        }
+        else
+        {
+            Debug.Log("MovementController will not work properly...objectToBeMoved has to be set");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         var isGrounded = characterController.isGrounded;
-        float horizontalValue, verticalValue;
-        GetInput(out horizontalValue, out verticalValue);
-
         if (logicShouldExecute)
         {
             if (isGrounded)
             {
+                float horizontalValue, verticalValue;
+                GetInput(out horizontalValue, out verticalValue);
                 GenerateMovingVector(0, verticalValue);
                 GenerateRotatingVector(horizontalValue);
-                Debug.Log(horizontalValue + "   " + verticalValue);
+                //Debug.Log(horizontalValue + "   " + verticalValue);
                 IncludeJumpIfPressedOnMovingVector();
                 moveDirection.y -= gravityEffectValue * Time.deltaTime;
             }
