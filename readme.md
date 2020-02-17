@@ -10,6 +10,7 @@ A project related to computer graphics and visualization for educational purpose
   ![First scene created in Unity environment](./firstScene.jpg)
 
   ### 2. Dummy planetary system with "low level" matrices implementation movement
+  https://youtu.be/d723-tgtqII
 
   ![Planetary system implemented with matrices](./planetarySystemWithMatricesImplementation.gif)
 
