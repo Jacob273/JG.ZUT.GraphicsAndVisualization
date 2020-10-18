@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.JakubGmur.Scripts
 {
@@ -44,7 +39,7 @@ namespace Assets.JakubGmur.Scripts
                     break;
 
                 case Pressed.Noone:
-                    Debug.Log("rotationCounter::" + rotationCounter);
+                    //Debug.Log("rotationCounter::" + rotationCounter);
                     break;
             }
 
