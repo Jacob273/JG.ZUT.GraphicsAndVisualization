@@ -1,3 +1,4 @@
+using JakubGmur.Animations;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
@@ -56,7 +57,7 @@ namespace Assets.JakubGmur.Scripts
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 DisableAllCamerasExcept(camera3);
-                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<ThirdPersonUserControl>().enabled = true;
+                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = true;
                 movedByForce.movingLogicShouldExecute = false;
                 characterController.logicShouldExecute = false;
                 movedByForce.enabled = false;
@@ -70,7 +71,7 @@ namespace Assets.JakubGmur.Scripts
             {
                 DisableAllCamerasExcept(camera2);
                 characterController.logicShouldExecute = false;
-                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<ThirdPersonUserControl>().enabled = false;
+                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
 
                 movedByForce.enabled = true;
                 movedByForce.movingLogicShouldExecute = true;
@@ -83,7 +84,7 @@ namespace Assets.JakubGmur.Scripts
             {
                 DisableAllCamerasExcept(camera1);
                 movedByForce.movingLogicShouldExecute = false;
-                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<ThirdPersonUserControl>().enabled = false;
+                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
 
                 characterController.enabled = true;
                 characterController.logicShouldExecute = true;
