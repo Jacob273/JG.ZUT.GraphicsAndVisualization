@@ -69,6 +69,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectSwitcher.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\HubsController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\IPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MainMenuLogic.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementController.cs" />

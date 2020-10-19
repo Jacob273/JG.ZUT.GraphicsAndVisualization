@@ -12,6 +12,11 @@ namespace Assets.JakubGmur.Scripts
         
         private GameObject actualImage;
 
+
+        private const float offsetX = 520.0f;
+        private const float offsetY = -285.0f;
+        private const float offsetZ = 140.0f;
+
         public void Start()
         {
             foreach(var image in images)
@@ -29,6 +34,7 @@ namespace Assets.JakubGmur.Scripts
             }
 
             actualImage.SetActive(true);
+            actualImage.GetComponentInChildren<RectTransform>().position.Set(offsetX, offsetY, offsetZ);
         }
 
         public void Update()
