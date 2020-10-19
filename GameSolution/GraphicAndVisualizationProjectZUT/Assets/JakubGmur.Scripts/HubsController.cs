@@ -34,7 +34,15 @@ namespace Assets.JakubGmur.Scripts
             }
 
             actualImage.SetActive(true);
-            actualImage.GetComponentInChildren<RectTransform>().position.Set(offsetX, offsetY, offsetZ);
+
+
+            var children = actualImage.GetComponentInChildren<Image>();
+            var rect = children.GetComponentInChildren<RectTransform>();
+
+            rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 40, rect.rect.width);
+            rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 40, rect.rect.height);
+            Debug.Log(rect.rect.width);
+            Debug.Log(rect.rect.height);
         }
 
         public void Update()
