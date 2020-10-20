@@ -10,8 +10,6 @@ namespace Assets.JakubGmur.Scripts
 
         void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Entered {other.name}");
-
             if (other.gameObject.tag.Equals(Tags.PickableTag))
             {
                 Debug.Log($"Found pickable!!!!!");
