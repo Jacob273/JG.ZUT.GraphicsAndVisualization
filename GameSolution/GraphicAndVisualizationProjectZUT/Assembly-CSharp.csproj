@@ -63,6 +63,7 @@
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleProcedualAnimation.cs" />
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleRotator.cs" />
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleSinMover.cs" />
+    <Compile Include="Assets\Global\Tags.cs" />
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonCharacter.cs" />
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonUserControl.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\EnemyController.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\MainMenuLogic.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementForce.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\PickingItemsController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PointsDrawer.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\RotateHead.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
