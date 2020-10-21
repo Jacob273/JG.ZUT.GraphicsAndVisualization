@@ -1,4 +1,5 @@
 ﻿using Assets.Global;
+using System;
 using UnityEngine;
 
 namespace Assets.JakubGmur.Scripts
@@ -7,13 +8,21 @@ namespace Assets.JakubGmur.Scripts
     {
 
         GameObject lastEntered = null;
+        PickableData lastPickedItem = null;
+
+        public event EventHandler<GameObject> LastPickedItemChanged; 
 
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag.Equals(Tags.PickableTag))
             {
-                Debug.Log($"Found pickable!!!!!");
-                lastEntered = other.gameObject;
+                var pickableItem = other.gameObject.GetComponent<PickableData>();
+                if (pickableItem != null)
+                {
+                    Debug.Log($"PickingItemsController::Found pickable!!!!!");
+                    lastEntered = other.gameObject;
+                    lastPickedItem = pickableItem;
+                }
             }
         }
 
@@ -23,8 +32,11 @@ namespace Assets.JakubGmur.Scripts
             {
                 if(lastEntered != null)
                 {
+                    Debug.Log($"PickingItemsController::LastPickedItemChanged {lastPickedItem.gameObject.name}");
+                    LastPickedItemChanged.Invoke(this, lastPickedItem.HeadUpDisplayObj);
                     Destroy(lastEntered);
                     lastEntered = null;
+                    lastPickedItem = null;
                 }
             }
         }

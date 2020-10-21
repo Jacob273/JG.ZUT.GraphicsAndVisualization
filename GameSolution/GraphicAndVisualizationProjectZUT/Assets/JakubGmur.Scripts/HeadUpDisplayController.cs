@@ -10,13 +10,31 @@ namespace Assets.JakubGmur.Scripts
     {
         public List<GameObject> images;
         public GameObject defaultImage;
+
+        public GameObject itemPicker;
+
         private GameObject actualImage;
 
         public void UpdateActualImage(GameObject image)
         {
             try
             {
-                actualImage = image;
+                if (image != null)
+                {
+                    actualImage = image;
+
+                    foreach (var img in images)
+                    {
+                        img.SetActive(false);
+                    }
+
+                    var children = actualImage.GetComponentInChildren<Image>();
+                    var rect = children.GetComponentInChildren<RectTransform>();
+
+                    rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 40, rect.rect.width);
+                    rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 40, rect.rect.height);
+                    actualImage.SetActive(true);
+                }
             }
             catch (Exception ex)
             {
@@ -34,26 +52,24 @@ namespace Assets.JakubGmur.Scripts
 
             if (defaultImage != null)
             {
-                actualImage = defaultImage;
+                UpdateActualImage(defaultImage);
             }
             else
             {
-                actualImage = images.FirstOrDefault();
+                UpdateActualImage(images.FirstOrDefault());
             }
-
-            actualImage.SetActive(true);
-
-            var children = actualImage.GetComponentInChildren<Image>();
-            var rect = children.GetComponentInChildren<RectTransform>();
-
-            rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 40, rect.rect.width);
-            rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 40, rect.rect.height);
+            RegisterOnPickerChanged();
         }
 
-        public void Update()
+        private void RegisterOnPickerChanged()
         {
-            //TODO
+            itemPicker.GetComponent<PickingItemsController>().LastPickedItemChanged += OnLastPickedChanged;
         }
 
+        private void OnLastPickedChanged(object sender, GameObject hudObj)
+        {
+            Debug.Log($"HeadUpDisplayController::Updating actual iamge {hudObj.name}");
+            UpdateActualImage(hudObj);
+        }
     }
 }

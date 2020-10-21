@@ -77,6 +77,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\MainMenuLogic.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementForce.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\PickableData.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PickingItemsController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PointsDrawer.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\RotateHead.cs" />
