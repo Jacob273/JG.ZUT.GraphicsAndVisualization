@@ -1,26 +1,27 @@
 ﻿using JakubGmur.Animations;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace Assets.JakubGmur.Scripts
 {
     public class GameObjectSwitcher : MonoBehaviour
     {
-        public Camera camera1;
-        public Camera camera2;
-        public Camera camera3;
+        public Camera camera1PlayerMovedByCharacterController;
+        public Camera camera2PlayerMovedByForce;
+        public Camera camera3PlayerMovedByForce2;
+        public Camera camera4PlayerFromAssetStore;
 
         public GameObject gameObjMovedByController;
         public GameObject gameObjMovedByForce;
         public GameObject gameObjThirdPartyFromAssetsStore;
+        public GameObject gameObjMovedByForce2;
 
         public GameObject defaultPlayer;
 
         private MovementController characterController;
-        private MovementForce movedByForce;
-
-        List<Camera> cameras = new List<Camera>();
+        private MovementForce movedByForce; 
+        private MovementForce movedByForce2;
+        private List<Camera> cameras = new List<Camera>();
 
 
         void TurnOnDefaultPlayer()
@@ -34,18 +35,19 @@ namespace Assets.JakubGmur.Scripts
 
             if(defaultPlayer.Equals(gameObjMovedByController))
             {
-                Debug.Log("GameObjectSwitcher::Switching to Default 1");
                 TurnOnPlayer1ControlledByCharacterController();
             }
             else if(defaultPlayer.Equals(gameObjMovedByForce))
             {
-                Debug.Log("GameObjectSwitcher::Switching to Default 2");
                 TurnOnPlayer2ControlledByForce();
+            }
+            else if (defaultPlayer.Equals(gameObjMovedByForce2))
+            {
+                TurnOnPlayer3ControlledByForce();
             }
             else if (defaultPlayer.Equals(gameObjThirdPartyFromAssetsStore))
             {
-                Debug.Log("GameObjectSwitcher::Switching to Default 3");
-                TurnOnPlayer3FromAssetsStore();
+                TurnOnPlayer4FromAssetsStore();
             }
         }
 
@@ -53,24 +55,29 @@ namespace Assets.JakubGmur.Scripts
         {
             cameras = new List<Camera>();
 
-            if (camera1 != null)
+            if (camera1PlayerMovedByCharacterController != null)
             {
-                cameras.Add(camera1);
+                cameras.Add(camera1PlayerMovedByCharacterController);
             }
 
-            if (camera2 != null)
+            if (camera2PlayerMovedByForce != null)
             {
-                cameras.Add(camera2);
+                cameras.Add(camera2PlayerMovedByForce);
             }
 
-            if(camera3 != null)
+            if (camera3PlayerMovedByForce2 != null)
             {
-                cameras.Add(camera3);
+                cameras.Add(camera3PlayerMovedByForce2);
+            }
+
+            if (camera4PlayerFromAssetStore != null)
+            {
+                cameras.Add(camera4PlayerFromAssetStore);
             }
 
             characterController = gameObjMovedByController.GetComponentInChildren<MovementController>();
             movedByForce = gameObjMovedByForce.GetComponentInChildren<MovementForce>();
-
+            movedByForce2 = gameObjMovedByForce2.GetComponentInChildren<MovementForce>();
             TurnOnDefaultPlayer();
         }
 
@@ -83,45 +90,56 @@ namespace Assets.JakubGmur.Scripts
         {
             TurnOnPlayer1ControlledByCharacterControllerOnKeyDown();
             TurnOnPlayer2ControlledByForceOnKeyDown();
-            TurnOnPlayer3FromAssetsStoreOnKeyDown();
+            TurnOnPlayer3ControlledByForceOnKeyDown();
+            TurnOnPlayer4FromAssetsStoreOnKeyDown();
         }
 
-        private void TurnOnPlayer3FromAssetsStoreOnKeyDown()
+        private void TurnOnPlayer1ControlledByCharacterController()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                TurnOnPlayer3FromAssetsStore();
-            }
-        }
-
-        private void TurnOnPlayer3FromAssetsStore()
-        {
-            DisableAllCamerasExcept(camera3);
-            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = true;
+            DisableAllCamerasExcept(camera1PlayerMovedByCharacterController);
             movedByForce.movingLogicShouldExecute = false;
-            characterController.logicShouldExecute = false;
-            movedByForce.enabled = false;
-            characterController.enabled = false;
-        }
+            movedByForce2.movingLogicShouldExecute = false;
+            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
 
-
-        private void TurnOnPlayer2ControlledByForceOnKeyDown()
-        {
-            if (Input.GetKeyUp(KeyCode.Alpha2))
-            {
-                TurnOnPlayer2ControlledByForce();
-            }
+            characterController.enabled = true;
+            characterController.logicShouldExecute = true;
         }
 
         private void TurnOnPlayer2ControlledByForce()
         {
-                DisableAllCamerasExcept(camera2);
-                characterController.logicShouldExecute = false;
-                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
+            DisableAllCamerasExcept(camera2PlayerMovedByForce);
+            characterController.logicShouldExecute = false;
+            movedByForce2.movingLogicShouldExecute = false;
+            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
 
-                movedByForce.enabled = true;
-                movedByForce.movingLogicShouldExecute = true;
+            movedByForce.enabled = true;
+            movedByForce.movingLogicShouldExecute = true;
         }
+
+        private void TurnOnPlayer3ControlledByForce()
+        {
+            DisableAllCamerasExcept(camera3PlayerMovedByForce2);
+            characterController.logicShouldExecute = false;
+            movedByForce.movingLogicShouldExecute = false;
+            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
+
+            movedByForce2.enabled = true;
+            movedByForce2.movingLogicShouldExecute = true;
+        }
+
+        private void TurnOnPlayer4FromAssetsStore()
+        {
+            DisableAllCamerasExcept(camera4PlayerFromAssetStore);
+            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = true;
+            movedByForce.movingLogicShouldExecute = false;
+            movedByForce2.movingLogicShouldExecute = false;
+            characterController.logicShouldExecute = false;
+            movedByForce.enabled = false;
+            movedByForce2.enabled = false;
+            characterController.enabled = false;
+        }
+
+        #region OnKeyDown
 
         private void TurnOnPlayer1ControlledByCharacterControllerOnKeyDown()
         {
@@ -131,14 +149,31 @@ namespace Assets.JakubGmur.Scripts
             }
         }
 
-        private void TurnOnPlayer1ControlledByCharacterController()
+        private void TurnOnPlayer2ControlledByForceOnKeyDown()
         {
-                DisableAllCamerasExcept(camera1);
-                movedByForce.movingLogicShouldExecute = false;
-                gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
-                characterController.enabled = true;
-                characterController.logicShouldExecute = true;
+            if (Input.GetKeyUp(KeyCode.Alpha2))
+            {
+                TurnOnPlayer2ControlledByForce();
+            }
         }
+
+        private void TurnOnPlayer3ControlledByForceOnKeyDown()
+        {
+            if (Input.GetKeyUp(KeyCode.Alpha3))
+            {
+                TurnOnPlayer3ControlledByForce();
+            }
+        }
+
+        private void TurnOnPlayer4FromAssetsStoreOnKeyDown()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                TurnOnPlayer4FromAssetsStore();
+            }
+        }
+
+        #endregion
 
         private void DisableAllCamerasExcept(Camera exceptionCamera)
         {
