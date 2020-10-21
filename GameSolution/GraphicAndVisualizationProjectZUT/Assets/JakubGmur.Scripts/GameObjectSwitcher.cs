@@ -13,43 +13,18 @@ namespace Assets.JakubGmur.Scripts
 
         public GameObject gameObjMovedByController;
         public GameObject gameObjMovedByForce;
-        public GameObject gameObjThirdPartyFromAssetsStore;
         public GameObject gameObjMovedByForce2;
+        public GameObject gameObjThirdPartyFromAssetsStore;
 
         public GameObject defaultPlayer;
 
-        private MovementController characterController;
-        private MovementForce movedByForce; 
-        private MovementForce movedByForce2;
+        private MovementController CharacterController { get { return gameObjMovedByController.GetComponentInChildren<MovementController>(); } }
+        private MovementForce MovedByForce { get { return gameObjMovedByForce.GetComponentInChildren<MovementForce>(); } }
+        private MovementForce MovedByForce2 { get { return gameObjMovedByForce2.GetComponentInChildren<MovementForce>(); } }
+        private JGThirdPersonUserControl ThirdPersonUserControl { get { return gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>(); } }
+        
         private List<Camera> cameras = new List<Camera>();
-
-
-        void TurnOnDefaultPlayer()
-        {
-            Debug.Log("GameObjectSwitcher::Switching to Default player");
-            if (defaultPlayer == null)
-            {
-                TurnOnPlayer1ControlledByCharacterController();
-                return;
-            }
-
-            if(defaultPlayer.Equals(gameObjMovedByController))
-            {
-                TurnOnPlayer1ControlledByCharacterController();
-            }
-            else if(defaultPlayer.Equals(gameObjMovedByForce))
-            {
-                TurnOnPlayer2ControlledByForce();
-            }
-            else if (defaultPlayer.Equals(gameObjMovedByForce2))
-            {
-                TurnOnPlayer3ControlledByForce();
-            }
-            else if (defaultPlayer.Equals(gameObjThirdPartyFromAssetsStore))
-            {
-                TurnOnPlayer4FromAssetsStore();
-            }
-        }
+        private List<IInputReceiver> inputReceivingObjects = new List<IInputReceiver>();
 
         void Start()
         {
@@ -74,11 +49,41 @@ namespace Assets.JakubGmur.Scripts
             {
                 cameras.Add(camera4PlayerFromAssetStore);
             }
-
-            characterController = gameObjMovedByController.GetComponentInChildren<MovementController>();
-            movedByForce = gameObjMovedByForce.GetComponentInChildren<MovementForce>();
-            movedByForce2 = gameObjMovedByForce2.GetComponentInChildren<MovementForce>();
+            InitializeInputReceivingObjectsList();
             TurnOnDefaultPlayer();
+        }
+
+        private void InitializeInputReceivingObjectsList()
+        {
+            inputReceivingObjects.Add(CharacterController);
+            inputReceivingObjects.Add(MovedByForce);
+            inputReceivingObjects.Add(MovedByForce2);
+        }
+
+        void TurnOnDefaultPlayer()
+        {
+            if (defaultPlayer == null)
+            {
+                TurnOnPlayerAndCamera(camera1PlayerMovedByCharacterController, CharacterController);
+                return;
+            }
+
+            if(defaultPlayer.Equals(gameObjMovedByController))
+            {
+                TurnOnPlayerAndCamera(camera1PlayerMovedByCharacterController, CharacterController);
+            }
+            else if(defaultPlayer.Equals(gameObjMovedByForce))
+            {
+                TurnOnPlayerAndCamera(camera2PlayerMovedByForce, MovedByForce);
+            }
+            else if (defaultPlayer.Equals(gameObjMovedByForce2))
+            {
+                TurnOnPlayerAndCamera(camera3PlayerMovedByForce2, MovedByForce2);
+            }
+            else if (defaultPlayer.Equals(gameObjThirdPartyFromAssetsStore))
+            {
+                TurnOnPlayer4FromAssetsStore();
+            }
         }
 
         void Update()
@@ -88,92 +93,53 @@ namespace Assets.JakubGmur.Scripts
 
         private void HandleKeyDown()
         {
-            TurnOnPlayer1ControlledByCharacterControllerOnKeyDown();
-            TurnOnPlayer2ControlledByForceOnKeyDown();
-            TurnOnPlayer3ControlledByForceOnKeyDown();
-            TurnOnPlayer4FromAssetsStoreOnKeyDown();
-        }
-
-        private void TurnOnPlayer1ControlledByCharacterController()
-        {
-            DisableAllCamerasExcept(camera1PlayerMovedByCharacterController);
-            movedByForce.movingLogicShouldExecute = false;
-            movedByForce2.movingLogicShouldExecute = false;
-            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
-
-            characterController.enabled = true;
-            characterController.logicShouldExecute = true;
-        }
-
-        private void TurnOnPlayer2ControlledByForce()
-        {
-            DisableAllCamerasExcept(camera2PlayerMovedByForce);
-            characterController.logicShouldExecute = false;
-            movedByForce2.movingLogicShouldExecute = false;
-            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
-
-            movedByForce.enabled = true;
-            movedByForce.movingLogicShouldExecute = true;
-        }
-
-        private void TurnOnPlayer3ControlledByForce()
-        {
-            DisableAllCamerasExcept(camera3PlayerMovedByForce2);
-            characterController.logicShouldExecute = false;
-            movedByForce.movingLogicShouldExecute = false;
-            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = false;
-
-            movedByForce2.enabled = true;
-            movedByForce2.movingLogicShouldExecute = true;
-        }
-
-        private void TurnOnPlayer4FromAssetsStore()
-        {
-            DisableAllCamerasExcept(camera4PlayerFromAssetStore);
-            gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>().enabled = true;
-            movedByForce.movingLogicShouldExecute = false;
-            movedByForce2.movingLogicShouldExecute = false;
-            characterController.logicShouldExecute = false;
-            movedByForce.enabled = false;
-            movedByForce2.enabled = false;
-            characterController.enabled = false;
-        }
-
-        #region OnKeyDown
-
-        private void TurnOnPlayer1ControlledByCharacterControllerOnKeyDown()
-        {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                TurnOnPlayer1ControlledByCharacterController();
+                TurnOnPlayerAndCamera(camera1PlayerMovedByCharacterController, CharacterController);
             }
-        }
-
-        private void TurnOnPlayer2ControlledByForceOnKeyDown()
-        {
-            if (Input.GetKeyUp(KeyCode.Alpha2))
+            else if(Input.GetKeyDown(KeyCode.Alpha2))
             {
-                TurnOnPlayer2ControlledByForce();
+                TurnOnPlayerAndCamera(camera2PlayerMovedByForce, MovedByForce);
             }
-        }
-
-        private void TurnOnPlayer3ControlledByForceOnKeyDown()
-        {
-            if (Input.GetKeyUp(KeyCode.Alpha3))
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                TurnOnPlayer3ControlledByForce();
+                TurnOnPlayerAndCamera(camera3PlayerMovedByForce2, MovedByForce2);
             }
-        }
-
-        private void TurnOnPlayer4FromAssetsStoreOnKeyDown()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha4))
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 TurnOnPlayer4FromAssetsStore();
             }
         }
 
-        #endregion
+        private void TurnOnPlayerAndCamera(Camera camera, MovementForce movedByForce)
+        {
+            DisableAllCamerasExcept(camera);
+            TurnOffInputReceivingObjectsExceptOne(movedByForce);
+            ThirdPersonUserControl.enabled = false;
+
+            movedByForce.enabled = true;
+            movedByForce.movingLogicShouldExecute = true;
+        }
+
+        private void TurnOnPlayerAndCamera(Camera camera, MovementController movedByCharacterController)
+        {
+            DisableAllCamerasExcept(camera);
+            TurnOffInputReceivingObjectsExceptOne(movedByCharacterController);
+            ThirdPersonUserControl.enabled = false;
+
+            movedByCharacterController.enabled = true;
+            movedByCharacterController.logicShouldExecute = true;
+        }
+
+        private void TurnOnPlayer4FromAssetsStore()
+        {
+            DisableAllCamerasExcept(camera4PlayerFromAssetStore);
+            TurnOffInputReceivingObjectsExceptOne(null);
+            ThirdPersonUserControl.enabled = true;
+            MovedByForce.enabled = false;
+            MovedByForce2.enabled = false;
+            CharacterController.enabled = false;
+        }
 
         private void DisableAllCamerasExcept(Camera exceptionCamera)
         {
@@ -186,5 +152,18 @@ namespace Assets.JakubGmur.Scripts
                 exceptionCamera.enabled = true;
             }
         }
+
+        private void TurnOffInputReceivingObjectsExceptOne(IInputReceiver exceptionalReceiver)
+        {
+            foreach (var rec in inputReceivingObjects)
+            {
+                if (rec != exceptionalReceiver)
+                {
+                    rec.TurnOffInput();
+                }
+            }
+            exceptionalReceiver?.TurnOnInput();
+        }
+
     }
 }

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.JakubGmur.Scripts;
+using UnityEngine;
 
-public class MovementForce : MonoBehaviour
+public class MovementForce : MonoBehaviour, IDisable, IInputReceiver
 {
     public float forceValueFactor = 10.0f;
     public float jumpForceValue = 10.0f;
@@ -114,5 +115,25 @@ public class MovementForce : MonoBehaviour
     void OnCollisionStay()
     {
         isGrounded = true;
+    }
+
+    public void TurnOffInput()
+    {
+        movingLogicShouldExecute = false;
+    }
+
+    public void TurnOnInput()
+    {
+        movingLogicShouldExecute = true;
+    }
+
+    public void Disable()
+    {
+        enabled = false;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
     }
 }

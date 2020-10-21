@@ -7,7 +7,7 @@ using UnityStandardAssets.CrossPlatformInput;
 namespace JakubGmur.Animations
 {
     [RequireComponent(typeof(JGThirdPersonCharacter))]
-    public class JGThirdPersonUserControl : MonoBehaviour
+    public class JGThirdPersonUserControl : MonoBehaviour, IDisable
     {
         private JGThirdPersonCharacter m_Character;
         public GameObject ownerOfPointsLoader;
@@ -79,6 +79,16 @@ namespace JakubGmur.Animations
                 }
 
             }
+        }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
         }
 
         public Vector3 MyPosition

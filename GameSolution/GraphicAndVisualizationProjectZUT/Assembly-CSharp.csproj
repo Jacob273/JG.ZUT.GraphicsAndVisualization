@@ -71,6 +71,8 @@
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectSwitcher.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\HeadUpDisplayController.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\IDisable.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\IInputReceiver.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\IPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MainMenuLogic.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementController.cs" />

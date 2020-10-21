@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.JakubGmur.Scripts;
+using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class MovementController : MonoBehaviour, IDisable, IInputReceiver
 {
 
     public GameObject objectToBeMoved;
@@ -113,5 +114,25 @@ public class MovementController : MonoBehaviour
     private void RotateSelf()
     {
         characterController.transform.Rotate(rotationVector , Space.Self);
+    }
+
+    public void TurnOffInput()
+    {
+        logicShouldExecute = false;
+    }
+
+    public void TurnOnInput()
+    {
+        logicShouldExecute = true;
+    }
+
+    public void Disable()
+    {
+        enabled = false;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
     }
 }
