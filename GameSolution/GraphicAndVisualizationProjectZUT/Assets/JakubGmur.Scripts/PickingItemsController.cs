@@ -30,7 +30,7 @@ namespace Assets.JakubGmur.Scripts
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                if(lastEntered != null)
+                if(lastEntered != null && lastPickedItem)
                 {
                     Debug.Log($"PickingItemsController::LastPickedItemChanged {lastPickedItem.gameObject.name}");
                     LastPickedItemChanged.Invoke(this, lastPickedItem.HeadUpDisplayObj);
