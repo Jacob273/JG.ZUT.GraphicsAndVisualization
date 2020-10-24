@@ -1,7 +1,7 @@
 ﻿using Assets.JakubGmur.Scripts;
 using UnityEngine;
 
-public class MovementController : MonoBehaviour, IDisable, IInputReceiver
+public class MovementController : BaseMovementScript
 {
 
     public GameObject objectToBeMoved;
@@ -116,22 +116,22 @@ public class MovementController : MonoBehaviour, IDisable, IInputReceiver
         characterController.transform.Rotate(rotationVector , Space.Self);
     }
 
-    public void TurnOffInput()
+    public override void TurnOffInput()
     {
         logicShouldExecute = false;
     }
 
-    public void TurnOnInput()
+    public override void TurnOnInput()
     {
         logicShouldExecute = true;
     }
 
-    public void Disable()
+    public override void Disable()
     {
         enabled = false;
     }
 
-    public void Enable()
+    public override void Enable()
     {
         enabled = true;
     }

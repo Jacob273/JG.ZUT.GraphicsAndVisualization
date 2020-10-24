@@ -1,7 +1,7 @@
 ﻿using Assets.JakubGmur.Scripts;
 using UnityEngine;
 
-public class MovementForce : MonoBehaviour, IDisable, IInputReceiver
+public class MovementForce : BaseMovementScript
 {
     public float forceValueFactor = 10.0f;
     public float jumpForceValue = 10.0f;
@@ -117,23 +117,24 @@ public class MovementForce : MonoBehaviour, IDisable, IInputReceiver
         isGrounded = true;
     }
 
-    public void TurnOffInput()
+    public override void TurnOffInput()
     {
         movingLogicShouldExecute = false;
     }
 
-    public void TurnOnInput()
+    public override void TurnOnInput()
     {
         movingLogicShouldExecute = true;
     }
 
-    public void Disable()
+    public override void Disable()
     {
         enabled = false;
     }
 
-    public void Enable()
+    public override void Enable()
     {
         enabled = true;
     }
+
 }

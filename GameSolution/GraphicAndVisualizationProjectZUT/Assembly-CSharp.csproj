@@ -67,6 +67,7 @@
     <Compile Include="Assets\Global\Tags.cs" />
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonCharacter.cs" />
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonUserControl.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\BaseMovementScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\BaseSceneLoadedLogic.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\DefaultSceneLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\EnemyController.cs" />
@@ -74,8 +75,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectSwitcher.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\HeadUpDisplayController.cs" />
-    <Compile Include="Assets\JakubGmur.Scripts\IDisable.cs" />
-    <Compile Include="Assets\JakubGmur.Scripts\IInputReceiver.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\IMovement.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\IPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MainMenuLogic.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\MovementController.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\ObjectsDeactivatorScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PickableData.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PickingItemsController.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\PlayerObject.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PointsDrawer.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\RotateHead.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />

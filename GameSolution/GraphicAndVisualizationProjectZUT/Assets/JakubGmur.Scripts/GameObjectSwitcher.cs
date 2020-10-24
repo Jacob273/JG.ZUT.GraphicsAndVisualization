@@ -1,4 +1,4 @@
-﻿using JakubGmur.Animations;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,84 +6,25 @@ namespace Assets.JakubGmur.Scripts
 {
     public class GameObjectSwitcher : MonoBehaviour
     {
-        public Camera camera1PlayerMovedByCharacterController;
-        public Camera camera2PlayerMovedByForce;
-        public Camera camera3PlayerMovedByForce2;
-        public Camera camera4PlayerFromAssetStore;
+        private const int Player1Index = 0;
+        private const int Player2Index = 1;
+        private const int Player3Index = 2;
+        private const int Player4Index = 3;
 
-        public GameObject gameObjMovedByController;
-        public GameObject gameObjMovedByForce;
-        public GameObject gameObjMovedByForce2;
-        public GameObject gameObjThirdPartyFromAssetsStore;
+        public int defaultPlayerIndex = 0;
+        public event EventHandler OnMainPlayerChanged;
 
-        public GameObject defaultPlayer;
-
-        private MovementController CharacterController { get { return gameObjMovedByController.GetComponentInChildren<MovementController>(); } }
-        private MovementForce MovedByForce { get { return gameObjMovedByForce.GetComponentInChildren<MovementForce>(); } }
-        private MovementForce MovedByForce2 { get { return gameObjMovedByForce2.GetComponentInChildren<MovementForce>(); } }
-        private JGThirdPersonUserControl ThirdPersonUserControl { get { return gameObjThirdPartyFromAssetsStore.GetComponentInChildren<JGThirdPersonUserControl>(); } }
-        
-        private List<Camera> cameras = new List<Camera>();
-        private List<IInputReceiver> inputReceivingObjects = new List<IInputReceiver>();
+        public List<GameObject> playersObjects;
 
         void Start()
         {
-            cameras = new List<Camera>();
-
-            if (camera1PlayerMovedByCharacterController != null)
-            {
-                cameras.Add(camera1PlayerMovedByCharacterController);
-            }
-
-            if (camera2PlayerMovedByForce != null)
-            {
-                cameras.Add(camera2PlayerMovedByForce);
-            }
-
-            if (camera3PlayerMovedByForce2 != null)
-            {
-                cameras.Add(camera3PlayerMovedByForce2);
-            }
-
-            if (camera4PlayerFromAssetStore != null)
-            {
-                cameras.Add(camera4PlayerFromAssetStore);
-            }
-            InitializeInputReceivingObjectsList();
             TurnOnDefaultPlayer();
-        }
-
-        private void InitializeInputReceivingObjectsList()
-        {
-            inputReceivingObjects.Add(CharacterController);
-            inputReceivingObjects.Add(MovedByForce);
-            inputReceivingObjects.Add(MovedByForce2);
         }
 
         void TurnOnDefaultPlayer()
         {
-            if (defaultPlayer == null)
-            {
-                TurnOnPlayerAndCamera(camera1PlayerMovedByCharacterController, CharacterController);
-                return;
-            }
-
-            if(defaultPlayer.Equals(gameObjMovedByController))
-            {
-                TurnOnPlayerAndCamera(camera1PlayerMovedByCharacterController, CharacterController);
-            }
-            else if(defaultPlayer.Equals(gameObjMovedByForce))
-            {
-                TurnOnPlayerAndCamera(camera2PlayerMovedByForce, MovedByForce);
-            }
-            else if (defaultPlayer.Equals(gameObjMovedByForce2))
-            {
-                TurnOnPlayerAndCamera(camera3PlayerMovedByForce2, MovedByForce2);
-            }
-            else if (defaultPlayer.Equals(gameObjThirdPartyFromAssetsStore))
-            {
-                TurnOnPlayer4FromAssetsStore();
-            }
+            TurnOnPlayerAndCamera(playersObjects[defaultPlayerIndex]);
+            return;
         }
 
         void Update()
@@ -93,77 +34,64 @@ namespace Assets.JakubGmur.Scripts
 
         private void HandleKeyDown()
         {
+            int? playerIndex = null;
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                TurnOnPlayerAndCamera(camera1PlayerMovedByCharacterController, CharacterController);
+                playerIndex = Player1Index;
             }
             else if(Input.GetKeyDown(KeyCode.Alpha2))
             {
-                TurnOnPlayerAndCamera(camera2PlayerMovedByForce, MovedByForce);
+                playerIndex = Player2Index;
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                TurnOnPlayerAndCamera(camera3PlayerMovedByForce2, MovedByForce2);
+                playerIndex = Player3Index;
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                TurnOnPlayer4FromAssetsStore();
+                playerIndex = Player4Index;
+            }
+
+            if(playerIndex.HasValue)
+            {
+                TurnOnPlayerAndCamera(playersObjects[playerIndex.Value]);
             }
         }
 
-        private void TurnOnPlayerAndCamera(Camera camera, MovementForce movedByForce)
+        private void TurnOnPlayerAndCamera(GameObject playerObject)
         {
-            DisableAllCamerasExcept(camera);
-            TurnOffInputReceivingObjectsExceptOne(movedByForce);
-            ThirdPersonUserControl.enabled = false;
-
-            movedByForce.enabled = true;
-            movedByForce.movingLogicShouldExecute = true;
+            var player = playerObject.GetComponentInChildren<PlayerObject>();
+            DisableAllCamerasExcept(player.camera);
+            TurnOffInputReceivingObjectsExceptOne(player.steeringScript);
+            player.steeringScript.Enable();
+            player.steeringScript.TurnOnInput();
         }
 
-        private void TurnOnPlayerAndCamera(Camera camera, MovementController movedByCharacterController)
+        private void DisableAllCamerasExcept(Camera activeCamera)
         {
-            DisableAllCamerasExcept(camera);
-            TurnOffInputReceivingObjectsExceptOne(movedByCharacterController);
-            ThirdPersonUserControl.enabled = false;
-
-            movedByCharacterController.enabled = true;
-            movedByCharacterController.logicShouldExecute = true;
-        }
-
-        private void TurnOnPlayer4FromAssetsStore()
-        {
-            DisableAllCamerasExcept(camera4PlayerFromAssetStore);
-            TurnOffInputReceivingObjectsExceptOne(null);
-            ThirdPersonUserControl.enabled = true;
-            MovedByForce.enabled = false;
-            MovedByForce2.enabled = false;
-            CharacterController.enabled = false;
-        }
-
-        private void DisableAllCamerasExcept(Camera exceptionCamera)
-        {
-            foreach (var camera in cameras)
+            foreach (var playerObj in playersObjects)
             {
-                if (camera != exceptionCamera)
+                var player = playerObj.GetComponentInChildren<PlayerObject>();
+                if (activeCamera != player.camera)
                 {
-                    camera.enabled = false;
-                }
-                exceptionCamera.enabled = true;
-            }
-        }
-
-        private void TurnOffInputReceivingObjectsExceptOne(IInputReceiver exceptionalReceiver)
-        {
-            foreach (var rec in inputReceivingObjects)
-            {
-                if (rec != exceptionalReceiver)
-                {
-                    rec.TurnOffInput();
+                    player.camera.enabled = false;
                 }
             }
-            exceptionalReceiver?.TurnOnInput();
+            activeCamera.enabled = true;
         }
 
+        private void TurnOffInputReceivingObjectsExceptOne(BaseMovementScript activeScript)
+        {
+            foreach (var playerObj in playersObjects)
+            {
+                var player = playerObj.GetComponentInChildren<PlayerObject>();
+                if (player.steeringScript != activeScript)
+                {
+                    player.steeringScript.TurnOffInput();
+                }
+            }
+            activeScript.TurnOnInput();
+        }
     }
 }

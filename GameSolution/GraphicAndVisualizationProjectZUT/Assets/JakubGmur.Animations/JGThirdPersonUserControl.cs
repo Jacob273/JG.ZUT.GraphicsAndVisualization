@@ -1,13 +1,11 @@
 using Assets.JakubGmur.Scripts;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 namespace JakubGmur.Animations
 {
     [RequireComponent(typeof(JGThirdPersonCharacter))]
-    public class JGThirdPersonUserControl : MonoBehaviour, IDisable
+    public class JGThirdPersonUserControl : BaseMovementScript
     {
         private JGThirdPersonCharacter m_Character;
         public GameObject ownerOfPointsLoader;
@@ -81,14 +79,24 @@ namespace JakubGmur.Animations
             }
         }
 
-        public void Disable()
+        public override void Disable()
         {
             enabled = false;
         }
 
-        public void Enable()
+        public override void Enable()
         {
             enabled = true;
+        }
+
+        public override void TurnOffInput()
+        {
+            
+        }
+
+        public override void TurnOnInput()
+        {
+            
         }
 
         public Vector3 MyPosition
