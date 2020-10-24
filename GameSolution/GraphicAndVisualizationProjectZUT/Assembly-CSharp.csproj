@@ -67,6 +67,7 @@
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonCharacter.cs" />
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonUserControl.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\BaseSceneLoadedLogic.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\DefaultSceneLoaderScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\EnemyController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectPointsLoader.cs" />
