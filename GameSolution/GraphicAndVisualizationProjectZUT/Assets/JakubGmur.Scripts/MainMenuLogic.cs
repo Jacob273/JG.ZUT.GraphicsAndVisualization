@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuLogic : MonoBehaviour
@@ -15,13 +16,13 @@ public class MainMenuLogic : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(SceneToLoad).completed += OnLoadNewSceneCompleted;
+        SceneManager.LoadSceneAsync(SceneToLoad).completed += OnLoadNewScene;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
     }
 
-    private void OnLoadNewSceneCompleted(AsyncOperation obj)
+    private void OnLoadNewScene(AsyncOperation obj)
     {
-        SceneManager.LoadSceneAsync(SceneToLoad).completed -= OnLoadNewSceneCompleted;
+        SceneManager.LoadSceneAsync(SceneToLoad).completed -= OnLoadNewScene;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
     }
 
