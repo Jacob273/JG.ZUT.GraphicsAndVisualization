@@ -12,7 +12,7 @@ namespace Assets.JakubGmur.Scripts
         private const int Player4Index = 3;
 
         public int defaultPlayerIndex = 0;
-        public event EventHandler OnMainPlayerChanged;
+        public event EventHandler<PlayerObject> OnMainPlayerChanged;
 
         public List<GameObject> playersObjects;
 
@@ -23,8 +23,15 @@ namespace Assets.JakubGmur.Scripts
 
         void TurnOnDefaultPlayer()
         {
-            TurnOnPlayerAndCamera(playersObjects[defaultPlayerIndex]);
-            return;
+            var activePlayer = playersObjects[defaultPlayerIndex];
+            TurnOnPlayerAndCamera(activePlayer);
+            NotifyNewPlayerChanged(activePlayer);
+        }
+
+        private void NotifyNewPlayerChanged(GameObject activePlayer)
+        {
+            var acivePlayerObj = activePlayer.GetComponentInChildren<PlayerObject>();
+            OnMainPlayerChanged?.Invoke(this, acivePlayerObj);
         }
 
         void Update()
@@ -55,17 +62,19 @@ namespace Assets.JakubGmur.Scripts
 
             if(playerIndex.HasValue)
             {
-                TurnOnPlayerAndCamera(playersObjects[playerIndex.Value]);
+                var newActivePlayer = playersObjects[playerIndex.Value];
+                TurnOnPlayerAndCamera(newActivePlayer);
             }
         }
 
         private void TurnOnPlayerAndCamera(GameObject playerObject)
         {
-            var player = playerObject.GetComponentInChildren<PlayerObject>();
-            DisableAllCamerasExcept(player.camera);
-            TurnOffInputReceivingObjectsExceptOne(player.steeringScript);
-            player.steeringScript.Enable();
-            player.steeringScript.TurnOnInput();
+            var newActivePlayer = playerObject.GetComponentInChildren<PlayerObject>();
+            DisableAllCamerasExcept(newActivePlayer.camera);
+            TurnOffInputReceivingObjectsExceptOne(newActivePlayer.steeringScript);
+            newActivePlayer.steeringScript.Enable();
+            newActivePlayer.steeringScript.TurnOnInput();
+            OnMainPlayerChanged?.Invoke(this, newActivePlayer);
         }
 
         private void DisableAllCamerasExcept(Camera activeCamera)

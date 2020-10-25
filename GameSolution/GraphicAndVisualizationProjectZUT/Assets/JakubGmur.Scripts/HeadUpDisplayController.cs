@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,68 +6,81 @@ namespace Assets.JakubGmur.Scripts
 {
     public class HeadUpDisplayController : MonoBehaviour
     {
-        public List<GameObject> images;
+        public List<GameObject> hudImages;
         public GameObject defaultImage;
+        public GameObjectSwitcher gameObjSwitcher;
 
-        public GameObject itemPicker;
+        private string activePlayerName;
+        private Dictionary<string, GameObject> playersImages = new Dictionary<string, GameObject>();
 
-        private GameObject actualImage;
-
-        public void UpdateActualImage(GameObject image)
+        public void UpdateActiveImageList(PickedItemEventArgs pickedItemArgs)
         {
-            try
+            if (pickedItemArgs != null)
             {
-                if (image != null)
-                {
-                    actualImage = image;
-
-                    foreach (var img in images)
-                    {
-                        img.SetActive(false);
-                    }
-
-                    var children = actualImage.GetComponentInChildren<Image>();
-                    var rect = children.GetComponentInChildren<RectTransform>();
-
-                    rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 40, rect.rect.width);
-                    rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 40, rect.rect.height);
-                    actualImage.SetActive(true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Log($"Could not set actual image. {ex.Message}");
-                actualImage = defaultImage;
+                playersImages[pickedItemArgs.playerName] = pickedItemArgs.pickableData.HeadUpDisplayObj;
             }
         }
 
         public void Start()
         {
-            foreach (var image in images)
+            foreach (var image in hudImages)
             {
                 image.SetActive(false);
             }
 
-            if (defaultImage != null)
+            foreach (var playerObj in gameObjSwitcher.playersObjects)
             {
-                UpdateActualImage(defaultImage);
+                var player = playerObj.GetComponentInChildren<PlayerObject>();
+                playersImages.Add(player.name, defaultImage);
             }
-            else
-            {
-                UpdateActualImage(images.FirstOrDefault());
-            }
-            RegisterOnPickerChanged();
+            RegisterOnEveryPlayerPicking();
+            RegisterOnPlayerSwitched();
         }
 
-        private void RegisterOnPickerChanged()
+        private void RegisterOnPlayerSwitched()
         {
-            itemPicker.GetComponent<PickingItemsController>().LastPickedItemChanged += OnLastPickedChanged;
+            gameObjSwitcher.OnMainPlayerChanged += OnMainPlayerChanged;
         }
 
-        private void OnLastPickedChanged(object sender, GameObject hudObj)
+        private void OnMainPlayerChanged(object sender, PlayerObject e)
         {
-            Debug.Log($"HeadUpDisplayController::Updating actual iamge {hudObj.name}");
-            UpdateActualImage(hudObj);
+            activePlayerName = e.gameObject.name;
+            UpdateDisplay(activePlayerName);
+        }
+
+        private void RegisterOnEveryPlayerPicking()
+        {
+            foreach (var playerObj in gameObjSwitcher.playersObjects)
+            {
+                var player = playerObj.GetComponentInChildren<PlayerObject>();
+                player.pickingItemsController.LastPickedItemChanged += OnLastPickedChanged;
+            }
+        }
+
+        private void OnLastPickedChanged(object sender, PickedItemEventArgs e)
+        {
+            UpdateActiveImageList(e);
+            UpdateDisplay(e.playerName);
+        }
+
+        private void UpdateDisplay(string activePlayerName)
+        {
+            foreach (var img in hudImages)
+            {
+                img.SetActive(false);
+            }
+
+            //getting the actual image for player
+            var actualImageForPlayer = playersImages[activePlayerName];
+            
+            //need to get to a rect and position the image
+            var children = actualImageForPlayer.GetComponentInChildren<Image>();
+            var rect = children.GetComponentInChildren<RectTransform>();
+            rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 40, rect.rect.width);
+            rect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 40, rect.rect.height);
+
+            //make it active!
+            actualImageForPlayer.SetActive(true);
         }
     }
 }

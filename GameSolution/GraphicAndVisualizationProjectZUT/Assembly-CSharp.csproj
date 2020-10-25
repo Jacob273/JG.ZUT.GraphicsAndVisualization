@@ -82,6 +82,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\MovementForce.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\ObjectsDeactivatorScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PickableData.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\PickedItemEventArgs.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PickingItemsController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PlayerObject.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PointsDrawer.cs" />

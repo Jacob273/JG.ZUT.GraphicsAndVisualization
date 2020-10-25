@@ -9,9 +9,9 @@ namespace Assets.JakubGmur.Scripts
 
         GameObject lastEntered = null;
         PickableData lastPickedItem = null;
+        
 
-        public event EventHandler<GameObject> LastPickedItemChanged; 
-
+        public event EventHandler<PickedItemEventArgs> LastPickedItemChanged; 
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag.Equals(Tags.PickableTag))
@@ -32,8 +32,7 @@ namespace Assets.JakubGmur.Scripts
             {
                 if(lastEntered != null && lastPickedItem)
                 {
-                    Debug.Log($"PickingItemsController::LastPickedItemChanged {lastPickedItem.gameObject.name}");
-                    LastPickedItemChanged.Invoke(this, lastPickedItem.HeadUpDisplayObj);
+                    LastPickedItemChanged.Invoke(this, new PickedItemEventArgs(lastPickedItem, gameObject.name));
                     Destroy(lastEntered);
                     lastEntered = null;
                     lastPickedItem = null;

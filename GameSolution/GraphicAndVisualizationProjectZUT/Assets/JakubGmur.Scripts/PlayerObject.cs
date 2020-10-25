@@ -9,6 +9,6 @@ namespace Assets.JakubGmur.Scripts
         public new Camera camera;
         public BaseMovementScript steeringScript;
         public GameObject owner;
-        public MonoBehaviour pickingItemsController;
+        public PickingItemsController pickingItemsController;
     }
 }
