@@ -63,6 +63,8 @@
      <Compile Include="Assets\FastIK\Scripts\Sample\SampleSinMover.cs" />
      <Compile Include="Assets\Global\Scenes.cs" />
      <Compile Include="Assets\Global\Tags.cs" />
+     <Compile Include="Assets\Helpers\Executor.cs" />
+     <Compile Include="Assets\Helpers\VectorComparer.cs" />
      <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonCharacter.cs" />
      <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonUserControl.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\BaseMovementScript.cs" />
@@ -85,6 +87,7 @@
      <Compile Include="Assets\JakubGmur.Scripts\PlayerObject.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\PointsDrawer.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\RotateHead.cs" />
+     <Compile Include="Assets\JakubGmur.Scripts\SlidingDoorScript.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
