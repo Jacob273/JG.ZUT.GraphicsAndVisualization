@@ -10,5 +10,6 @@ namespace Assets.JakubGmur.Scripts
         public BaseMovementScript steeringScript;
         public GameObject owner;
         public PickingItemsController pickingItemsController;
+        public PlayerInventoryScript inventory;
     }
 }

@@ -10,7 +10,7 @@ public class SlidingDoorScript : MonoBehaviour
         Y = 1
     }
 
-    private enum Execution
+    protected enum Execution
     {
         None = 0,
         StartOpening = 1,
@@ -22,8 +22,10 @@ public class SlidingDoorScript : MonoBehaviour
     public float openSpeed = 1.0f;
     public Transform doorObj;
 
-    private Execution currentExecutionLoggic = Execution.None;
+    protected Execution currentExecutionLoggic = Execution.None;
     private Vector3 defaultDoorPosition;
+    private const int DelayForClosing = 3500;
+    private bool canNowCloseDoor = true;
 
     void Start()
     {
@@ -82,8 +84,7 @@ public class SlidingDoorScript : MonoBehaviour
         doorObj.localPosition = new Vector3(newXPosition, doorObj.localPosition.y, doorObj.localPosition.z);
     }
 
-    // Activate the Main function when Player enter the trigger area
-    void OnTriggerEnter(Collider other)
+    protected virtual void HandleEnter(Collider other)
     {
         if (other.CompareTag(Tags.PlayableTag))
         {
@@ -91,19 +92,27 @@ public class SlidingDoorScript : MonoBehaviour
         }
     }
 
-    private const int DelayForClosing = 3500;
-    private bool canCloseDoor = true;
-    // Deactivate the Main function when Player exit the trigger area
-    void OnTriggerExit(Collider other)
+    protected virtual void HandleExit(Collider other)
     {
-        if (other.CompareTag(Tags.PlayableTag) && canCloseDoor)
+        if (other.CompareTag(Tags.PlayableTag) && canNowCloseDoor)
         {
-            canCloseDoor = false;
+            canNowCloseDoor = false;
             Executor.PauseAndExecute(() =>
             {
                 currentExecutionLoggic = Execution.StartClosing;
-                canCloseDoor = true;
+                canNowCloseDoor = true;
             }, DelayForClosing);
         }
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        HandleEnter(other);
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        HandleExit(other);
     }
 }
