@@ -16,10 +16,12 @@ namespace Assets.JakubGmur.Scripts
                 counter++;
                 if(counter % 2 ==0)
                 {
+                    Messenger.Instance.UpdateMessage("Super mode activated!");
                     StartCoroutine(OnStartAnimation());
                 }
                 else
                 {
+                    Messenger.Instance.UpdateMessage("Super mode deactivated.");
                     Destroy(instantiatedPrefab);
                 }
             }
