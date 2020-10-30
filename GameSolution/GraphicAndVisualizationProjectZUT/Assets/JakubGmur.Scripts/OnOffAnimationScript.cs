@@ -16,7 +16,7 @@ namespace Assets.JakubGmur.Scripts
                 counter++;
                 if(counter % 2 ==0)
                 {
-                    StartCoroutine(DeadAnimation());
+                    StartCoroutine(OnStartAnimation());
                 }
                 else
                 {
@@ -26,7 +26,7 @@ namespace Assets.JakubGmur.Scripts
         }
 
 
-        IEnumerator DeadAnimation()
+        IEnumerator OnStartAnimation()
         {
             yield return new WaitForSeconds(1);
             var currObject = this.gameObject;
