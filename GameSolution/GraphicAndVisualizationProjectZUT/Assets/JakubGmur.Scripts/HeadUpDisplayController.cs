@@ -67,7 +67,11 @@ namespace Assets.JakubGmur.Scripts
         {
             foreach (var img in hudImages)
             {
-                img.SetActive(false);
+                if(img.active)
+                {
+                    Debug.Log($"Deactivating {img.name}");
+                    img.SetActive(false);
+                }
             }
 
             //getting the actual image for player
