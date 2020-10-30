@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.JakubGmur.Scripts
@@ -6,7 +7,8 @@ namespace Assets.JakubGmur.Scripts
     public class Messenger : MonoBehaviour
     {
         public static Messenger Instance = null;
-        private Text _text; 
+        private Text _text;
+        private const float displayTextTimeInSecond = 2.5f;
 
 
         void Awake()
@@ -26,7 +28,15 @@ namespace Assets.JakubGmur.Scripts
 
         public void UpdateMessage(string message)
         {
+            StopAllCoroutines();
+            StartCoroutine(OnUpdateMessage(message));
+        }
+
+        IEnumerator OnUpdateMessage(string message)
+        {
             Instance._text.text = message;
+            yield return new WaitForSeconds(displayTextTimeInSecond);
+            Instance._text.text = string.Empty;
         }
 
     }
