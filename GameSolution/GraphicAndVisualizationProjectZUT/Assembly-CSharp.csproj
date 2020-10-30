@@ -72,6 +72,7 @@
      <Compile Include="Assets\JakubGmur.Scripts\DefaultSceneLoader.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\EnemyController.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\FollowPlayer.cs" />
+     <Compile Include="Assets\JakubGmur.Scripts\GameDetails.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\GameObjectPointsLoader.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\GameObjectSwitcher.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\HeadUpDisplayController.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\JakubGmur.Scripts\IMovement.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\IPointsLoader.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\MainMenuLogic.cs" />
+     <Compile Include="Assets\JakubGmur.Scripts\Messenger.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\MovementController.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\MovementForce.cs" />
      <Compile Include="Assets\JakubGmur.Scripts\ObjectsDeactivatorScript.cs" />

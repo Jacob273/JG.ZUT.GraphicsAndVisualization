@@ -34,6 +34,7 @@ namespace Assets.JakubGmur.Scripts
                 {
                     LastPickedItemChanged.Invoke(this, new PickedItemEventArgs(lastPickedItem, gameObject.name));
                     Destroy(lastEntered);
+                    Messenger.Instance.UpdateMessage($"Picked {lastPickedItem.name}");
                     lastEntered = null;
                     lastPickedItem = null;
                 }
