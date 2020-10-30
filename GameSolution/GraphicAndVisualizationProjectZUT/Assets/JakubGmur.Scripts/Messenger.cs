@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +35,7 @@ namespace Assets.JakubGmur.Scripts
 
         IEnumerator OnUpdateMessage(string message)
         {
-            Instance._text.text = message;
+            Instance._text.text = $"{DateTime.Now.ToString("H:mm:ss")}: {message}";
             yield return new WaitForSeconds(displayTextTimeInSecond);
             Instance._text.text = string.Empty;
         }
