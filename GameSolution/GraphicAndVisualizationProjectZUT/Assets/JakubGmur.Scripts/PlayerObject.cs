@@ -11,5 +11,6 @@ namespace Assets.JakubGmur.Scripts
         public GameObject owner;
         public PickingItemsController pickingItemsController;
         public PlayerInventoryScript inventory;
+        public ThrowableWeaponScript weapon;
     }
 }

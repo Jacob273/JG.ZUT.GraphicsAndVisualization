@@ -8,6 +8,8 @@ namespace Assets.JakubGmur.Scripts
         public GameObject prefabWithAnimation;
         private GameObject instantiatedPrefab;
 
+        private const float DelayBetweenNextAnimation = 1.0f;
+
         private static int counter = 1;
         void Update()
         {
@@ -27,10 +29,10 @@ namespace Assets.JakubGmur.Scripts
             }
         }
 
-
+        
         IEnumerator OnStartAnimation()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(DelayBetweenNextAnimation);
             var currObject = this.gameObject;
             instantiatedPrefab = Instantiate(prefabWithAnimation, currObject.transform.position, currObject.transform.rotation);
             instantiatedPrefab.transform.parent = this.gameObject.transform;
