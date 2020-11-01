@@ -33,7 +33,8 @@ namespace Assets.JakubGmur.Scripts
             instantiatedWeapon.GetComponent<WeaponDetails>().SourceId = GetComponent<PlayerObject>().Id;
 
             var rigidBody = instantiatedWeapon.GetComponent<Rigidbody>();
-            rigidBody.AddForce(new Vector3(x: 1, y: 1, z: 1) * throwableDistance);
+            rigidBody.AddForce(new Vector3(x: 1, y: 1, z: 0) * throwableDistance);
+
             yield return new WaitForSeconds(TimeAfterInstantiatedWeaponIsDestroyed);
             Destroy(instantiatedWeapon);
         }
