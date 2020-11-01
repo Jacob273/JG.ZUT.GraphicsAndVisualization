@@ -23,7 +23,7 @@ namespace Assets.JakubGmur.Scripts
                 else
                 {
                     Messenger.Instance.UpdateMessage("Super mode deactivated.");
-                    Destroy(instantiatedPrefab);
+                    StartCoroutine(OnDestroyAnimation());
                 }
                 counter++;
             }
@@ -37,6 +37,13 @@ namespace Assets.JakubGmur.Scripts
             instantiatedPrefab = Instantiate(prefabWithAnimation, currObject.transform.position, currObject.transform.rotation);
             instantiatedPrefab.transform.parent = this.gameObject.transform;
             instantiatedPrefab.transform.Translate(Vector3.up);
+        }
+
+        IEnumerator OnDestroyAnimation()
+        {
+            yield return new WaitForSeconds(DelayBetweenNextAnimation);
+            Destroy(instantiatedPrefab);
+
         }
     }
 }
