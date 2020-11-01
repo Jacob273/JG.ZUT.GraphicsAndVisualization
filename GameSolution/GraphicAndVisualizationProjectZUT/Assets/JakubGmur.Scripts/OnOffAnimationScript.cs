@@ -10,13 +10,12 @@ namespace Assets.JakubGmur.Scripts
 
         private const float DelayBetweenNextAnimation = 1.0f;
 
-        private static int counter = 1;
+        private int counter = 2;
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                counter++;
-                if(counter % 2 ==0)
+                if(counter % 2 == 0)
                 {
                     Messenger.Instance.UpdateMessage("Super mode activated!");
                     StartCoroutine(OnStartAnimation());
@@ -26,6 +25,7 @@ namespace Assets.JakubGmur.Scripts
                     Messenger.Instance.UpdateMessage("Super mode deactivated.");
                     Destroy(instantiatedPrefab);
                 }
+                counter++;
             }
         }
 
