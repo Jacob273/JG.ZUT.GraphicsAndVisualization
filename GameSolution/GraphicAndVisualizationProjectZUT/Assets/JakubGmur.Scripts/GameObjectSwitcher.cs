@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.JakubGmur.Scripts
@@ -101,6 +102,12 @@ namespace Assets.JakubGmur.Scripts
                 }
             }
             activeScript.TurnOnInput();
+        }
+
+        public Camera GetActiveCamera()
+        {
+            return playersObjects.Select(x => x.GetComponentInChildren<PlayerObject>().camera)
+                                 .Where(x => x.enabled == true).FirstOrDefault();
         }
     }
 }
