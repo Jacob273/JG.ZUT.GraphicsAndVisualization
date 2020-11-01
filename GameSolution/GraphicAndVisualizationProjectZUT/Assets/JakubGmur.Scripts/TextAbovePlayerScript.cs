@@ -5,13 +5,13 @@ namespace Assets.JakubGmur.Scripts
 {
     public class TextAbovePlayerScript : MonoBehaviour
     {
-        private Text _textObj;
+        public Text _textObjForName;
+        public Text _textObjForHealth;
         private GameObjectSwitcher _gameObjSwitcher;
 
         void Awake()
         {
             _gameObjSwitcher = FindObjectOfType<GameObjectSwitcher>();
-            _textObj = GetComponentInChildren<Text>();
         }
 
         // Update is called once per frame
@@ -21,7 +21,12 @@ namespace Assets.JakubGmur.Scripts
             if (activeCamera != null)
             {
                 Vector3 targetPosition = activeCamera.WorldToScreenPoint(gameObject.GetComponentInParent<PlayerObject>().transform.position);
-                _textObj.transform.position = targetPosition;
+                var forNamePosition = targetPosition;
+                _textObjForName.transform.position = forNamePosition;
+
+                const int yOffset = 35;
+                var forHealthPosition = forNamePosition + Vector3.down * yOffset;
+                _textObjForHealth.transform.position = forHealthPosition;
             }
         }
     }
