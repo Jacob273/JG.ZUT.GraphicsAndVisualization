@@ -64,6 +64,7 @@
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleSinMover.cs" />
     <Compile Include="Assets\Global\Scenes.cs" />
     <Compile Include="Assets\Global\Tags.cs" />
+    <Compile Include="Assets\Helpers\DoubleComparer.cs" />
     <Compile Include="Assets\Helpers\Executor.cs" />
     <Compile Include="Assets\Helpers\VectorComparer.cs" />
     <Compile Include="Assets\JakubGmur.Animations\JGThirdPersonCharacter.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectPointsLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameObjectSwitcher.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\HeadUpDisplayController.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\HealthScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\IInventoryItem.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\IMovement.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\IPointsLoader.cs" />
@@ -96,7 +98,9 @@
     <Compile Include="Assets\JakubGmur.Scripts\RotateHead.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\SlidingDoorKeyRequiredScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\SlidingDoorScript.cs" />
-    <Compile Include="Assets\JakubGmur.Scripts\ThrowableWeaponScript.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\TextAbovePlayerScript.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\ThrowingWeaponScript.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\WeaponDetails.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
@@ -105,10 +109,28 @@
     <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\FastIK\Documentation.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Rokoko\MotionLibrary\Resources\Shaders\New AmplifyShader.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Rokoko\MotionLibrary\Resources\Shaders\MotionLibraryFloor3.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

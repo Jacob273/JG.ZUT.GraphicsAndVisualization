@@ -29,15 +29,18 @@ public class EnemyController : MovementForce
 
     public void Update()
     {
-        distanceToObject = Vector3.Distance(objectToTrack.transform.position, MyPosition);
+        if(objectToTrack != null)
+        {
+            distanceToObject = Vector3.Distance(objectToTrack.transform.position, MyPosition);
 
-        if (distanceToObject <= radiusToDetectOpponent)
-        {
-            enemyDetected.Invoke(this, (detected: true,  target: objectToTrack));
-        }
-        else
-        {
-            enemyDetected.Invoke(this, (detected: false, target: objectToTrack));
+            if (distanceToObject <= radiusToDetectOpponent)
+            {
+                enemyDetected.Invoke(this, (detected: true, target: objectToTrack));
+            }
+            else
+            {
+                enemyDetected.Invoke(this, (detected: false, target: objectToTrack));
+            }
         }
     }
 

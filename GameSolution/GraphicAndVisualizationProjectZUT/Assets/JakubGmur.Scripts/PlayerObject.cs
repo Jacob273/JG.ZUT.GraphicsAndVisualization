@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Assets.JakubGmur.Scripts
@@ -11,6 +12,16 @@ namespace Assets.JakubGmur.Scripts
         public GameObject owner;
         public PickingItemsController pickingItemsController;
         public PlayerInventoryScript inventory;
-        public ThrowableWeaponScript weapon;
+        public ThrowingWeaponScript weapon;
+        public HealthScript health;
+
+        public static int uniqueCounter;
+
+        public int Id { get; }
+        public PlayerObject()
+        {
+            Interlocked.Increment(ref uniqueCounter);
+            Id = uniqueCounter;
+        }
     }
 }

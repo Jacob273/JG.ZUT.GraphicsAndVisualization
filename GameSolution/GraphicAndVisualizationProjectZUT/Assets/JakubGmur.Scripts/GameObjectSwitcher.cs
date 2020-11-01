@@ -71,11 +71,14 @@ namespace Assets.JakubGmur.Scripts
         private void TurnOnPlayerAndCamera(GameObject playerObject)
         {
             var newActivePlayer = playerObject.GetComponentInChildren<PlayerObject>();
-            DisableAllCamerasExcept(newActivePlayer.camera);
-            TurnOffInputReceivingObjectsExceptOne(newActivePlayer.steeringScript);
-            newActivePlayer.steeringScript.Enable();
-            newActivePlayer.steeringScript.TurnOnInput();
-            OnMainPlayerChanged?.Invoke(this, newActivePlayer);
+            if (newActivePlayer != null)
+            {
+                DisableAllCamerasExcept(newActivePlayer.camera);
+                TurnOffInputReceivingObjectsExceptOne(newActivePlayer.steeringScript);
+                newActivePlayer.steeringScript.Enable();
+                newActivePlayer.steeringScript.TurnOnInput();
+                OnMainPlayerChanged?.Invoke(this, newActivePlayer);
+            }
         }
 
         private void DisableAllCamerasExcept(Camera activeCamera)
@@ -83,9 +86,12 @@ namespace Assets.JakubGmur.Scripts
             foreach (var playerObj in playersObjects)
             {
                 var player = playerObj.GetComponentInChildren<PlayerObject>();
-                if (activeCamera != player.camera)
+                if(player != null)
                 {
-                    player.camera.enabled = false;
+                    if (activeCamera != player.camera)
+                    {
+                        player.camera.enabled = false;
+                    }
                 }
             }
             activeCamera.enabled = true;
@@ -106,8 +112,8 @@ namespace Assets.JakubGmur.Scripts
 
         public Camera GetActiveCamera()
         {
-            return playersObjects.Select(x => x.GetComponentInChildren<PlayerObject>().camera)
-                                 .Where(x => x.enabled == true).FirstOrDefault();
+            return playersObjects.Select(x => x.GetComponentInChildren<PlayerObject>()?.camera)
+                                 .Where(x => x?.enabled == true).FirstOrDefault();
         }
     }
 }

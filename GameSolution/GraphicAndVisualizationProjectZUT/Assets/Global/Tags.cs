@@ -4,5 +4,6 @@
     {
         public const string PickableTag = "Pickable";
         public const string PlayableTag = "Playable";
+        public const string DamageAbleTag = "Damageable";
     }
 }
