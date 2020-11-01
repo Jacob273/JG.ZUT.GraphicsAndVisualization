@@ -69,7 +69,6 @@ namespace Assets.JakubGmur.Scripts
             {
                 if(img.active)
                 {
-                    Debug.Log($"Deactivating {img.name}");
                     img.SetActive(false);
                 }
             }
