@@ -12,19 +12,21 @@ namespace Assets.JakubGmur.Scripts
         private const float TimeAfterInstantiatedWeaponIsDestroyed = 5.0f;
         private const float TimeDelayBetweenThrowing = 0.5f;
 
+        private float accumulatedTime = 0.0f;
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            accumulatedTime += Time.deltaTime;
+            if (accumulatedTime >= 0.8f)
             {
-                counter++;
-                if (counter % 2 == 0)
+                if (Input.GetKeyDown(KeyCode.R))
                 {
                     StartCoroutine(OnThrow());
+                    accumulatedTime = 0.0f;
                 }
             }
         }
 
-        
+
         IEnumerator OnThrow()
         {
             yield return new WaitForSeconds(TimeDelayBetweenThrowing);
@@ -33,8 +35,7 @@ namespace Assets.JakubGmur.Scripts
             instantiatedWeapon.GetComponent<WeaponDetails>().SourceId = GetComponent<PlayerObject>().Id;
 
             var rigidBody = instantiatedWeapon.GetComponent<Rigidbody>();
-            rigidBody.AddForce(new Vector3(x: 1, y: 1, z: 0) * throwableDistance);
-
+            rigidBody.AddRelativeForce(Vector3.forward * throwableDistance);
             yield return new WaitForSeconds(TimeAfterInstantiatedWeaponIsDestroyed);
             Destroy(instantiatedWeapon);
         }
