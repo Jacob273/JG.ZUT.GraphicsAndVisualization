@@ -24,12 +24,13 @@ namespace Assets.JakubGmur.Scripts
         {
             if (other.CompareTag(Tags.DamageAbleTag))
             {
-                var weaponDetails = other.GetComponent<WeaponDetails>();
-                var playerObj = GetComponent<PlayerObject>();
 
-                if ((weaponDetails.SourceId != playerObj.Id) && !weaponDetails.WasDamaged(playerObj.Id))
+                var weaponDetails = other.GetComponent<WeaponDetails>();
+                var attackedObject = GetComponent<BaseIdentity>();
+
+                if ((weaponDetails.SourceId != attackedObject.Id) && !weaponDetails.WasDamaged(attackedObject.Id))
                 {
-                    weaponDetails.AddToDamaged(playerObj.Id);
+                    weaponDetails.AddToDamaged(attackedObject.Id);
                     ReduceHealth(weaponDetails.Damage);
                     if(!CanLive())
                     {

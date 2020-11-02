@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Threading;
 using UnityEngine;
 
 namespace Assets.JakubGmur.Scripts
 {
     [Serializable]
-    public class PlayerObject : MonoBehaviour
+    public class PlayerObject : BaseIdentity
     {
         public new Camera camera;
         public BaseMovementScript steeringScript;
@@ -15,13 +14,9 @@ namespace Assets.JakubGmur.Scripts
         public ThrowingWeaponScript weapon;
         public HealthScript health;
 
-        public static int uniqueCounter;
-
-        public int Id { get; }
-        public PlayerObject()
+        public PlayerObject() : base()
         {
-            Interlocked.Increment(ref uniqueCounter);
-            Id = uniqueCounter;
+
         }
     }
 }
