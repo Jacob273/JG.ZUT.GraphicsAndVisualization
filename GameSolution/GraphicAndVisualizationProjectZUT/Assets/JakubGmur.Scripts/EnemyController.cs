@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.JakubGmur.Scripts;
+using System;
 using UnityEngine;
 
 public class EnemyController : MovementForce
@@ -11,14 +12,20 @@ public class EnemyController : MovementForce
     private float rotationSpeed = 1.0f;
 
     private event EventHandler<(bool detected, GameObject target)> enemyDetected;
+    private GameObjectSwitcher _gameObjSwitcher;
 
-    public Vector3 MyPosition
+    void Awake()
     {
-        get
-        {
-            return this.transform.position;
-        }
+        _gameObjSwitcher = FindObjectOfType<GameObjectSwitcher>();
+        _gameObjSwitcher.OnMainPlayerChanged += OnMainPlayerChanged;
     }
+
+    private void OnMainPlayerChanged(object sender, PlayerObject e)
+    {
+        objectToTrack = e.gameObject;
+    }
+
+    public Vector3 MyPosition => transform.position;
 
     // Start is called before the first frame update
     public override void Start()

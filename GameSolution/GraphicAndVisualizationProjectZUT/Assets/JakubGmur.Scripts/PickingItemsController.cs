@@ -19,7 +19,6 @@ namespace Assets.JakubGmur.Scripts
                 var pickableItem = other.gameObject.GetComponent<PickableData>();
                 if (pickableItem != null)
                 {
-                    Debug.Log($"PickingItemsController::Found pickable!!!!!");
                     lastEntered = other.gameObject;
                     lastPickedItem = pickableItem;
                 }
