@@ -7,6 +7,8 @@ namespace Assets.JakubGmur.Scripts
     {
         public Text _textObjForName;
         public Text _textObjForHealth;
+        public Transform objectTransformToBeDisplayedAbove;
+
         private GameObjectSwitcher _gameObjSwitcher;
 
         void Awake()
@@ -20,7 +22,7 @@ namespace Assets.JakubGmur.Scripts
             var activeCamera = _gameObjSwitcher.GetActiveCamera();
             if (activeCamera != null)
             {
-                Vector3 targetPosition = activeCamera.WorldToScreenPoint(gameObject.GetComponentInParent<PlayerObject>().transform.position);
+                Vector3 targetPosition = activeCamera.WorldToScreenPoint(objectTransformToBeDisplayedAbove.position);
                 var forNamePosition = targetPosition;
                 _textObjForName.transform.position = forNamePosition;
 
