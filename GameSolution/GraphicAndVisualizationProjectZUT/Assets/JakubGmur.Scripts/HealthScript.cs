@@ -34,6 +34,7 @@ namespace Assets.JakubGmur.Scripts
                     ReduceHealth(weaponDetails.Damage);
                     if(!CanLive())
                     {
+                        attackedObject.NotifyAboutDeath();
                         Destroy(gameObject);
                     }
                 }

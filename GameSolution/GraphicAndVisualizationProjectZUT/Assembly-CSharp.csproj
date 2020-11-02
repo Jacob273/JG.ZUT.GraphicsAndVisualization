@@ -73,7 +73,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\BaseIdentity.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\BaseMovementScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\BaseSceneLoadedLogic.cs" />
-    <Compile Include="Assets\JakubGmur.Scripts\DefaultSceneLoader.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\GameSceneLoader.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\EnemyController.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\GameDetails.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\PlayerInventoryScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PlayerObject.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\PointsDrawer.cs" />
+    <Compile Include="Assets\JakubGmur.Scripts\QuestManager.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\RotateHead.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\SlidingDoorKeyRequiredScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\SlidingDoorScript.cs" />
