@@ -75,6 +75,7 @@ namespace Assets.JakubGmur.Scripts
             {
                 DisableAllCamerasExcept(newActivePlayer.camera);
                 TurnOffInputReceivingObjectsExceptOne(newActivePlayer.steeringScript);
+                TurnOffThrowingExceptOne(newActivePlayer.weapon);
                 newActivePlayer.steeringScript.Enable();
                 newActivePlayer.steeringScript.TurnOnInput();
                 OnMainPlayerChanged?.Invoke(this, newActivePlayer);
@@ -102,12 +103,33 @@ namespace Assets.JakubGmur.Scripts
             foreach (var playerObj in playersObjects)
             {
                 var player = playerObj.GetComponentInChildren<PlayerObject>();
-                if (player.steeringScript != activeScript)
+                if (player.steeringScript != null && player.steeringScript != activeScript)
                 {
                     player.steeringScript.TurnOffInput();
                 }
             }
-            activeScript.TurnOnInput();
+
+            if (activeScript != null)
+            {
+                activeScript.TurnOnInput();
+            }
+        }
+
+        private void TurnOffThrowingExceptOne(ThrowingWeaponScript activeScript)
+        {
+            foreach (var playerObj in playersObjects)
+            {
+                var player = playerObj.GetComponentInChildren<PlayerObject>();
+                if (player.weapon != null && player.weapon != activeScript)
+                {
+                    player.weapon.LogicShouldExecute = false;
+                }
+            }
+
+            if (activeScript != null)
+            {
+                activeScript.LogicShouldExecute = true;
+            }
         }
 
         public Camera GetActiveCamera()

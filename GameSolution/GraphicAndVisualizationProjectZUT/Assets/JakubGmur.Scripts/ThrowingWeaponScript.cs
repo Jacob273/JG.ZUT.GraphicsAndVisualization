@@ -8,20 +8,24 @@ namespace Assets.JakubGmur.Scripts
         public float throwableDistance = 850;
 
         public GameObject weaponToBeThrown;
-        private static int counter = 1;
+
+        public bool LogicShouldExecute { get; set; }
+
         private const float TimeAfterInstantiatedWeaponIsDestroyed = 5.0f;
         private const float TimeDelayBetweenThrowing = 0.5f;
-
         private float accumulatedTime = 0.0f;
         void Update()
         {
-            accumulatedTime += Time.deltaTime;
-            if (accumulatedTime >= 0.8f)
+            if(LogicShouldExecute)
             {
-                if (Input.GetKeyDown(KeyCode.R))
+                accumulatedTime += Time.deltaTime;
+                if (accumulatedTime >= 0.8f)
                 {
-                    StartCoroutine(OnThrow());
-                    accumulatedTime = 0.0f;
+                    if (Input.GetKeyDown(KeyCode.R))
+                    {
+                        StartCoroutine(OnThrow());
+                        accumulatedTime = 0.0f;
+                    }
                 }
             }
         }
@@ -33,7 +37,6 @@ namespace Assets.JakubGmur.Scripts
             var currObject = gameObject;
             GameObject instantiatedWeapon = Instantiate(weaponToBeThrown, currObject.transform.position, currObject.transform.rotation);
             instantiatedWeapon.GetComponent<WeaponDetails>().SourceId = GetComponent<PlayerObject>().Id;
-
             var rigidBody = instantiatedWeapon.GetComponent<Rigidbody>();
             rigidBody.AddRelativeForce(Vector3.forward * throwableDistance);
             yield return new WaitForSeconds(TimeAfterInstantiatedWeaponIsDestroyed);
