@@ -5,6 +5,8 @@ A project related to computer graphics and visualization for educational purpose
 * To implement C# "scripts" to transform Unity objects with low level matrices (transformation matrices: rotation, scale, translation)
 
 * To learn the basics of Unity API & their components
+
+* To build a game demo
   
   ### 1. My very first unity scene
   ![First scene created in Unity environment](./firstScene.jpg)
