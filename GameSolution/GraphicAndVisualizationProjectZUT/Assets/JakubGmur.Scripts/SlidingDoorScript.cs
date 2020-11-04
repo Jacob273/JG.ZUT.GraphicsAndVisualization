@@ -21,8 +21,10 @@ public class SlidingDoorScript : MonoBehaviour
     public float openDistance = 1.0f;
     public float openSpeed = 1.0f;
     public Transform doorObj;
+    public AudioSource openingDoorsSound;
+    public AudioSource closingDoorsSound;
 
-    protected Execution currentExecutionLoggic = Execution.None;
+    protected Execution _currentExecutionLoggic = Execution.None;
     private Vector3 defaultDoorPosition;
     private const int DelayForClosing = 3500;
     private bool canNowCloseDoor = true;
@@ -38,13 +40,13 @@ public class SlidingDoorScript : MonoBehaviour
     // Main function
     void Update()
     {
-        if (!doorObj || currentExecutionLoggic == Execution.None)
+        if (!doorObj || _currentExecutionLoggic == Execution.None)
         {
             return;
         }
 
         float targetDistance = 0.0f;
-        switch (currentExecutionLoggic)
+        switch (_currentExecutionLoggic)
         {
             case Execution.StartOpening:
                 targetDistance = openDistance;
@@ -53,6 +55,8 @@ public class SlidingDoorScript : MonoBehaviour
                 targetDistance = 0.0f;
                 break;
         }
+
+        PlaySoundOnceIfExecutionStateChanged();
 
         switch (direction)
         {
@@ -64,13 +68,31 @@ public class SlidingDoorScript : MonoBehaviour
                 break;
         }
 
-        if(currentExecutionLoggic == Execution.StartClosing 
+        if(_currentExecutionLoggic == Execution.StartClosing 
             && VectorComparer.AreEqual(doorObj.localPosition, defaultDoorPosition))
         {
-            currentExecutionLoggic = Execution.None;
+            _currentExecutionLoggic = Execution.None;
         }
     }
 
+
+    Execution _lastExecution = Execution.None;
+
+    private void PlaySoundOnceIfExecutionStateChanged()
+    {
+        if (_lastExecution != _currentExecutionLoggic)
+        {
+            if (_currentExecutionLoggic == Execution.StartOpening)
+            {
+                openingDoorsSound?.Play();
+            }
+            else if (_currentExecutionLoggic == Execution.StartClosing)
+            {
+                closingDoorsSound?.Play();
+            }
+        }
+        _lastExecution = _currentExecutionLoggic;
+    }
 
     private void MoveDoorOverY(float newDistanceValue)
     {
@@ -88,7 +110,7 @@ public class SlidingDoorScript : MonoBehaviour
     {
         if (other.CompareTag(Tags.PlayableTag))
         {
-            currentExecutionLoggic = Execution.StartOpening;
+            _currentExecutionLoggic = Execution.StartOpening;
         }
     }
 
@@ -99,7 +121,7 @@ public class SlidingDoorScript : MonoBehaviour
             canNowCloseDoor = false;
             Executor.PauseAndExecute(() =>
             {
-                currentExecutionLoggic = Execution.StartClosing;
+                _currentExecutionLoggic = Execution.StartClosing;
                 canNowCloseDoor = true;
             }, DelayForClosing);
         }

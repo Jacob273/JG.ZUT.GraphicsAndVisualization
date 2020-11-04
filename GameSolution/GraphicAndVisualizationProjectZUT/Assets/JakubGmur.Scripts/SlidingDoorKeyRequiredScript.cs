@@ -20,11 +20,7 @@ namespace Assets.JakubGmur.Scripts
                                                  .Any(x => x.TargetDoorId == this.DoorId);
                     if (hasKey)
                     {
-                        currentExecutionLoggic = Execution.StartOpening;
-                    }
-                    else
-                    {
-                        Debug.Log("KEY NOT FOUND!!!!");
+                        _currentExecutionLoggic = Execution.StartOpening;
                     }
                 }
             }
