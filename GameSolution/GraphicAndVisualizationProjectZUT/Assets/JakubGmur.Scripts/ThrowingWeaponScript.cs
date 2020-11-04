@@ -8,12 +8,18 @@ namespace Assets.JakubGmur.Scripts
         public float throwableDistance = 850;
 
         public GameObject weaponToBeThrown;
-
+        public AudioSource thrownWeaponSound;
         public bool LogicShouldExecute { get; set; }
 
         private const float TimeAfterInstantiatedWeaponIsDestroyed = 5.0f;
         private const float TimeDelayBetweenThrowing = 0.5f;
         private float accumulatedTime = 0.0f;
+
+        void Start()
+        {
+            thrownWeaponSound = GetComponent<AudioSource>();
+        }
+
         void Update()
         {
             if(LogicShouldExecute)
@@ -39,6 +45,10 @@ namespace Assets.JakubGmur.Scripts
             instantiatedWeapon.GetComponent<WeaponDetails>().SourceId = GetComponent<PlayerObject>().Id;
             var rigidBody = instantiatedWeapon.GetComponent<Rigidbody>();
             rigidBody.AddRelativeForce(Vector3.forward * throwableDistance);
+
+
+            thrownWeaponSound?.Play();
+
             yield return new WaitForSeconds(TimeAfterInstantiatedWeaponIsDestroyed);
             Destroy(instantiatedWeapon);
         }

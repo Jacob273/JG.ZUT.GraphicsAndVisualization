@@ -92,10 +92,12 @@ namespace Assets.JakubGmur.Scripts
                     if (activeCamera != player.camera)
                     {
                         player.camera.enabled = false;
+                        player.camera.GetComponent<AudioListener>().enabled = false;
                     }
                 }
             }
             activeCamera.enabled = true;
+            activeCamera.GetComponent<AudioListener>().enabled = true;
         }
 
         private void TurnOffInputReceivingObjectsExceptOne(BaseMovementScript activeScript)
