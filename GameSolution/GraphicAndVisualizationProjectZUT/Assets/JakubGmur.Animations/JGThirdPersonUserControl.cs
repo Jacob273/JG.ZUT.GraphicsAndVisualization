@@ -1,4 +1,5 @@
 using Assets.JakubGmur.Scripts;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace JakubGmur.Animations
         public bool shouldCrouch = false;
         public bool shouldJump = false;
         public bool infiniteWalking = true;
+        public AudioSource walkingSound;
 
         private void Start()
         {
@@ -55,9 +57,11 @@ namespace JakubGmur.Animations
                 if (distanceToTarget > 0.5f && angleBetweenMeAndTarget <= limitAngle)
                 {
                     m_Character.Move(targetDirection, shouldCrouch, shouldJump);
+                    PlayWalkingSound();
                 }//duza odleglosc && duzy kat  = obracamy sie!
                 else if(angleBetweenMeAndTarget >= limitAngle)
                 {
+                    StopWalkingSound();
                     m_Character.Move(new Vector3(0, 0, 0), shouldCrouch, shouldJump, false);
                     float singleStep = rotationSpeed * Time.deltaTime;
                     Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
@@ -65,7 +69,6 @@ namespace JakubGmur.Animations
                 }//mala odleglosc && maly kat = bierzemy nastepnego targeta i poruszamy sie!
                 else 
                 {
-                    //m_Character.Move(targetDirection, shouldCrouch, shouldJump);
                     currentTarget = currentTarget.Next ?? currentTarget.List.First;
                 }
 
@@ -76,6 +79,22 @@ namespace JakubGmur.Animations
                     return;
                 }
 
+            }
+        }
+
+        void PlayWalkingSound()
+        {
+            if(walkingSound != null && !walkingSound.isPlaying)
+            {
+                walkingSound?.Play(0);
+            }
+        }
+
+        void StopWalkingSound()
+        {
+            if (walkingSound != null && walkingSound.isPlaying)
+            {
+                walkingSound?.Stop();
             }
         }
 

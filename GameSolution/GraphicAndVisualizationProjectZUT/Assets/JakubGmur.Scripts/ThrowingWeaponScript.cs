@@ -15,10 +15,6 @@ namespace Assets.JakubGmur.Scripts
         private const float TimeDelayBetweenThrowing = 0.5f;
         private float accumulatedTime = 0.0f;
 
-        void Start()
-        {
-            thrownWeaponSound = GetComponent<AudioSource>();
-        }
 
         void Update()
         {
