@@ -13,6 +13,7 @@ namespace Assets.JakubGmur.Scripts
         public PlayerInventoryScript inventory;
         public ThrowingWeaponScript weapon;
         public HealthScript health;
+        public SaveSpawnPointScript spawn;
 
         public PlayerObject() : base()
         {

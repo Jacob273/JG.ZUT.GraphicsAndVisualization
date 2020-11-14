@@ -35,7 +35,7 @@ namespace Assets.JakubGmur.Scripts
 
         IEnumerator OnUpdateMessage(string message)
         {
-            Instance._text.text = $"{DateTime.Now.ToString("H:mm:ss")}: {message}";
+            Instance._text.text += $"{Environment.NewLine}{DateTime.Now.ToString("H:mm:ss")}: {message}";
             yield return new WaitForSeconds(displayTextTimeInSecond);
             Instance._text.text = string.Empty;
         }

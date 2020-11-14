@@ -13,7 +13,6 @@ namespace Assets.JakubGmur.Scripts
         private float currentHealth;
 
         private const float isDeadHealthValue = 0.0f;
-        // Use this for initialization
         void Start()
         {
             currentHealth = maxHealth;
@@ -26,7 +25,7 @@ namespace Assets.JakubGmur.Scripts
             {
 
                 var weaponDetails = other.GetComponent<WeaponDetails>();
-                var attackedObject = GetComponent<BaseIdentity>();
+                var attackedObject = GetComponent<PlayerObject>();
 
                 if ((weaponDetails.SourceId != attackedObject.Id) && !weaponDetails.WasDamaged(attackedObject.Id))
                 {
@@ -34,12 +33,22 @@ namespace Assets.JakubGmur.Scripts
                     ReduceHealth(weaponDetails.Damage);
                     if(!CanLive())
                     {
-                        attackedObject.NotifyAboutDeath();
-                        Destroy(gameObject);
+                        Messenger.Instance.UpdateMessage("You have died...");
+                        if (attackedObject?.spawn != null)
+                        {
+                            Messenger.Instance.UpdateMessage("Trying to respawn...");
+                            //TODO: respawn does not work when dieing... (?)
+                            attackedObject.spawn.Respawn();
+                            RestoreHealth();
+                        }
+                        else
+                        {
+                            Messenger.Instance.UpdateMessage("Game over.");
+                            attackedObject.NotifyAboutDeath();
+                            Destroy(gameObject);
+                        }
                     }
                 }
-
-
             }
         }
 
@@ -47,6 +56,11 @@ namespace Assets.JakubGmur.Scripts
         {
             currentHealth -= dmg;
             UpdateLabel();
+        }
+
+        public void RestoreHealth()
+        {
+            currentHealth = maxHealth;
         }
 
         private bool CanLive()
