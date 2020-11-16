@@ -63,14 +63,15 @@ namespace Assets.JakubGmur.Scripts
             }
         }
 
-        public void Respawn()
+        public bool Respawn()
         {
-            if(CanRespawn)
+            if (CanRespawn)
             {
                 Messenger.Instance.UpdateMessage("Respawning.........");
                 gameObject.transform.position = LastSavedSpawnPoint;
-                Debug.Log(LastSavedSpawnPoint);
+                return true;
             }
+            return false;
         }
     }
 }
