@@ -30,9 +30,7 @@ namespace Assets.JakubGmur.Scripts
 
         private void AppendColor(ref string message, Color color)
         {
-            Debug.Log($"${ColorUtility.ToHtmlStringRGB(color)}");
             message = $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{message}</color>";
-            Debug.Log(message);
         }
 
         public void UpdateMessage(string message)
