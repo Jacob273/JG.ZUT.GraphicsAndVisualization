@@ -61,6 +61,11 @@ namespace Assets.JakubGmur.Scripts
                     Messenger.Instance.UpdateMessage("Cannot respawn. No spawn points vere visited or saved.", Color.grey);
                 }
             }
+            else if(Input.GetKeyDown(KeyCode.F3))
+            {
+                PlayersXMLSerializer serializer = new PlayersXMLSerializer();
+                serializer.Serialize(GetComponent<PlayerObject>(), Debug.Log);
+            }
         }
 
         public bool Respawn()
