@@ -28,12 +28,12 @@ namespace Assets.JakubGmur.Scripts
 
             if(enemiesToKill.Count == 1)
             {
-                Messenger.Instance.UpdateMessage("QuestInfo: You have 1 enemy left to finish the quest.");
+                Messenger.Instance.UpdateMessage("QuestInfo: You have 1 enemy left to finish the quest.", Color.cyan);
             }
 
             if(enemiesToKill.Count == 0)
             {
-                Messenger.Instance.UpdateMessage("QuestInfo: Congrats ! You have completed quest succesfully.");
+                Messenger.Instance.UpdateMessage("QuestInfo: Congrats ! You have completed quest succesfully.", Color.cyan);
                 StartCoroutine(OnLoadNewScene());
             }
         }

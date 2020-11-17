@@ -33,7 +33,7 @@ namespace Assets.JakubGmur.Scripts
                     ReduceHealth(weaponDetails.Damage);
                     if(!CanLive())
                     {
-                        Messenger.Instance.UpdateMessage($"Player <{attackedObject.Id}> have died...");
+                        Messenger.Instance.UpdateMessage($"Player <{attackedObject.Id}> have died...", Color.red);
                         StopMovementImmediately(attackedObject);
                         if (attackedObject?.spawn != null && attackedObject.spawn.Respawn())
                         {
@@ -62,21 +62,21 @@ namespace Assets.JakubGmur.Scripts
 
         void StopMovementImmediately(PlayerObject deadObject)
         {
-            Messenger.Instance.UpdateMessage($"Player <{deadObject.Id}> is exhausted...");
+            Messenger.Instance.UpdateMessage($"Player <{deadObject.Id}> is exhausted...", Color.red);
             deadObject.steeringScript.Disable();
             deadObject.steeringScript.TurnOffInput();
         }
 
         private void Died(PlayerObject attackedObject)
         {
-            Messenger.Instance.UpdateMessage($"Player <{attackedObject.Id}> has ended his game.");
+            Messenger.Instance.UpdateMessage($"Player <{attackedObject.Id}> has ended his game.", Color.red);
             attackedObject.NotifyAboutDeath();
             Destroy(gameObject);
         }
 
         public void ReduceHealth(float dmg)
         {
-            Messenger.Instance.UpdateMessage($"DMG: -{dmg}");
+            Messenger.Instance.UpdateMessage($"DMG: -{dmg}", Color.red);
             currentHealth -= dmg;
             UpdateLabel();
         }

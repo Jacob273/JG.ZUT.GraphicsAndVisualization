@@ -47,7 +47,7 @@ namespace Assets.JakubGmur.Scripts
                 }
                 else
                 {
-                    Messenger.Instance.UpdateMessage("Cannot save right now.");
+                    Messenger.Instance.UpdateMessage("Cannot save right now.", Color.grey);
                 }
             }
             else if(Input.GetKeyDown(KeyCode.F2))
@@ -58,7 +58,7 @@ namespace Assets.JakubGmur.Scripts
                 }
                 else
                 {
-                    Messenger.Instance.UpdateMessage("Cannot respawn. No spawn points vere visited or saved.");
+                    Messenger.Instance.UpdateMessage("Cannot respawn. No spawn points vere visited or saved.", Color.grey);
                 }
             }
         }

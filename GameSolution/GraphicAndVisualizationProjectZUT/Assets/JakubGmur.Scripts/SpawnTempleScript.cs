@@ -16,7 +16,7 @@ namespace Assets.JakubGmur.Scripts
                 var spawnScript = otherGameObj.GetComponent<PlayerObject>()?.spawn;
                 if(spawnScript != null)
                 {
-                    Messenger.Instance.UpdateMessage("Entered save zone.");
+                    Messenger.Instance.UpdateMessage("Entered save zone.", Color.green);
                     var newPosition = transform.position + spawnOffset;
                     spawnScript.CanSaveSpawn = true;
                     spawnScript.LastEnteredSpawnPoint = newPosition;
