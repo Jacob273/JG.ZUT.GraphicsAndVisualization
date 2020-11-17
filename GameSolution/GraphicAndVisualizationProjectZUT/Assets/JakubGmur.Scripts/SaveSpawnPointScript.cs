@@ -67,7 +67,7 @@ namespace Assets.JakubGmur.Scripts
         {
             if (CanRespawn)
             {
-                Messenger.Instance.UpdateMessage("Respawning.........");
+                Messenger.Instance.UpdateMessage("Respawning.........", Color.black);
                 gameObject.transform.position = LastSavedSpawnPoint;
                 return true;
             }

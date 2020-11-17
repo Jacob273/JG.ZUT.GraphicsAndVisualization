@@ -10,7 +10,7 @@ namespace Assets.JakubGmur.Scripts
         public static Messenger Instance = null;
         private Text _text;
         private const float displayTextTimeInSecond = 2.5f;
-        private static Color DefaultTextColor = Color.black;
+        private static Color DefaultTextColor = Color.grey;
 
         void Awake()
         {
@@ -25,7 +25,7 @@ namespace Assets.JakubGmur.Scripts
 
             Instance._text = GetComponent<Text>();
             Instance._text.supportRichText = true;
-            Instance.UpdateMessage($"Welcome to {GameDetails.GameName} ver. {GameDetails.Version}.");
+            Instance.UpdateMessage($"Welcome to {GameDetails.GameName} ver. {GameDetails.Version}.", Color.black);
         }
 
         private void AppendColor(ref string message, Color color)
