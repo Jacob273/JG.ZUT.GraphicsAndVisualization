@@ -66,6 +66,12 @@ namespace Assets.JakubGmur.Scripts
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
                 serializer.Serialize(GetComponent<PlayerObject>(), Debug.Log);
             }
+            else if (Input.GetKeyDown(KeyCode.F4))
+            {
+                PlayersXMLSerializer serializer = new PlayersXMLSerializer();
+                var deserializedPlayer = serializer.Deserialize();
+                Debug.Log(deserializedPlayer.GlobalPosition);
+            }
         }
 
         public bool Respawn()

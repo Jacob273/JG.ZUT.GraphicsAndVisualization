@@ -9,6 +9,7 @@ namespace Assets.JakubGmur.Scripts
     {
         private static string CurrentDir = Directory.GetCurrentDirectory();
         private const string fileName = "UnityAdventureXamePlayerObjects.xml";
+        private static string FullFilePath = $"{CurrentDir}/{fileName}";
 
         public void Serialize(PlayerObject player, Action<string> onSerializationInfoCallback)
         {
@@ -16,17 +17,34 @@ namespace Assets.JakubGmur.Scripts
             playerToSerialize.GlobalPosition = player.transform.position;
             playerToSerialize.InventoryList = player.inventory.InventoryList;
 
-            string fullFilePath = $"{CurrentDir}/{fileName}";
             try
             {
-                TextWriter writer = new StreamWriter(fullFilePath);
-                XmlSerializer serializer = new XmlSerializer(typeof(SerializablePlayer));
-                serializer.Serialize(writer, playerToSerialize);
-                onSerializationInfoCallback($"Saved file on path {fullFilePath}");
+                using (TextWriter writer = new StreamWriter(FullFilePath))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(SerializablePlayer));
+                    serializer.Serialize(writer, playerToSerialize);
+                    onSerializationInfoCallback($"Saved file on path {FullFilePath}");
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                onSerializationInfoCallback($"Could not save file on path <{fullFilePath}> reason <{ex.Message}>");
+                onSerializationInfoCallback($"Could not save file on path <{FullFilePath}> reason <{ex.Message}>");
+            }
+        }
+
+        public SerializablePlayer Deserialize()
+        {
+            if (!File.Exists(FullFilePath))
+            {
+                return null;
+            }
+            else
+            {
+                using (FileStream stream = new FileStream(FullFilePath, FileMode.Open))
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(SerializablePlayer));
+                    return deserializer.Deserialize(stream) as SerializablePlayer;
+                }
             }
         }
     }
