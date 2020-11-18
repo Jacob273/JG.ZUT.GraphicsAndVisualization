@@ -12,7 +12,7 @@ namespace Assets.JakubGmur.XMLStructure
 
         }
 
-        public SerializablePickableKey(string targetDoorId)
+        public SerializablePickableKey(string hudName, string targetDoorId) : base(hudName)
         {
             TargetDoorId = targetDoorId;
         }

@@ -17,8 +17,8 @@ namespace Assets.JakubGmur.XMLStructure
             List = pickableList;
         }
 
-        [XmlElement(typeof(SerializablePickable), ElementName = "InInventoryItem")]
-        [XmlElement(typeof(SerializablePickableKey), ElementName = "InInventoryKey")]
+        [XmlElement(typeof(SerializablePickable), ElementName = "Item")]
+        [XmlElement(typeof(SerializablePickableKey), ElementName = "Key")]
         public List<SerializablePickable> List { get; set; }
     }
 }

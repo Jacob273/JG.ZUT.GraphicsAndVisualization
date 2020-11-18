@@ -21,17 +21,7 @@ namespace Assets.JakubGmur.XMLStructure
             Name = player.gameObject.name;
 
             Inventory = new SerializableInventoryList();
-            foreach (var inventoryElement in player.inventory.InventoryList)
-            {
-                if(inventoryElement is PickableData pickableInventoryElement)
-                {
-                    Inventory.List.Add(new SerializablePickable(pickableInventoryElement.HeadUpDisplayObj.gameObject.name));
-                }
-                else if(inventoryElement is PickableKey key)
-                {
-                    Inventory.List.Add(new SerializablePickableKey(key.TargetDoorId));
-                }
-            }
+            UpdateInventoryList(player);
         }
 
         [XmlElement("Position")]
@@ -44,5 +34,25 @@ namespace Assets.JakubGmur.XMLStructure
         public string Name { get; set; }
 
         public SerializableInventoryList Inventory { get; set; }
+
+
+        private void UpdateInventoryList(PlayerObject player)
+        {
+            foreach (var inventoryElement in player.inventory.InventoryList)
+            {
+                var type = inventoryElement.GetType();
+
+                if (type == typeof(PickableData))
+                {
+                    var pickable = inventoryElement as PickableData;
+                    Inventory.List.Add(new SerializablePickable(pickable.HeadUpDisplayObj.gameObject.name));
+                }
+                else if (type == typeof(PickableKey))
+                {
+                    var key = inventoryElement as PickableKey;
+                    Inventory.List.Add(new SerializablePickableKey(key.HeadUpDisplayObj.gameObject.name, key.TargetDoorId));
+                }
+            }
+        }
     }
 }

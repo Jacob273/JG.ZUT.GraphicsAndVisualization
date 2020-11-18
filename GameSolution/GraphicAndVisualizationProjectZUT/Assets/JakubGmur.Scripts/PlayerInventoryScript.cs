@@ -17,7 +17,6 @@ namespace Assets.JakubGmur.Scripts
         private void OnLastPickedItemChanged(object sender, PickedItemEventArgs e)
         {
             InventoryList.Add(e.pickableData);
-            Debug.Log($"{InventoryList.Count}");
         }
     }
 }
