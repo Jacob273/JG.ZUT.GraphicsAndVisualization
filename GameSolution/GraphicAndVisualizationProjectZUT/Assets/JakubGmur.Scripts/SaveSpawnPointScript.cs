@@ -72,7 +72,7 @@ namespace Assets.JakubGmur.Scripts
             {
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
                 var deserializedRoot = serializer.Deserialize();
-                Debug.Log(deserializedRoot.Players.FirstOrDefault().GlobalPosition);
+
             }
         }
 

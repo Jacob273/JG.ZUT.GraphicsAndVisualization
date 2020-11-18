@@ -8,16 +8,16 @@ namespace Assets.JakubGmur.XMLStructure
     public class XmlRoot
     {
         [XmlElement("Players")]
-        public List<SerializablePlayer> Players { get; set; }
+        public SerializablePlayerList Players { get; set; }
 
         public XmlRoot()
         {
-            Players = new List<SerializablePlayer>();
+            Players = new SerializablePlayerList();
         }
 
         public XmlRoot(List<SerializablePlayer> players)
         {
-            Players = players;
+            Players = new SerializablePlayerList(players);
         }
     }
 }

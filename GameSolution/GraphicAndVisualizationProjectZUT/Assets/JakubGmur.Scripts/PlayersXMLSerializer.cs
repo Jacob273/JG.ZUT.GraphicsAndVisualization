@@ -18,7 +18,7 @@ namespace Assets.JakubGmur.Scripts
             
             foreach (var player in players)
             {
-                xmlRoot.Players.Add(new SerializablePlayer(player));
+                xmlRoot.Players.List.Add(new SerializablePlayer(player));
             }
 
             try

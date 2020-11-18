@@ -18,7 +18,6 @@ namespace Assets.JakubGmur.XMLStructure
         public SerializablePlayer(PlayerObject player)
         {
             GlobalPosition = player.transform.position;
-            InventoryList = player.inventory.InventoryList;
             Id = player.Id;
             Name = player.gameObject.name;
         }
@@ -34,6 +33,6 @@ namespace Assets.JakubGmur.XMLStructure
 
 
         [XmlIgnore]
-        public List<IInventoryItem> InventoryList { get; set; }
+        public SerializableInventoryList InventoryList { get; set; }
     }
 }
