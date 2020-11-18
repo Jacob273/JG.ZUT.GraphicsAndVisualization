@@ -108,6 +108,7 @@
     <Compile Include="Assets\JakubGmur.Scripts\TextAbovePlayerScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\ThrowingWeaponScript.cs" />
     <Compile Include="Assets\JakubGmur.Scripts\WeaponDetails.cs" />
+    <Compile Include="Assets\JakubGmur.XMLStructure\XmlRoot.cs" />
     <Compile Include="Assets\JakubGmur.XMLStructure\SerializablePlayer.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />

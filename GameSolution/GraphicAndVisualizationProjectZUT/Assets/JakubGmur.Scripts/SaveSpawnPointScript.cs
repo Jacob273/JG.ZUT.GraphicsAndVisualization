@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Assets.JakubGmur.Scripts
 {
@@ -64,13 +66,13 @@ namespace Assets.JakubGmur.Scripts
             else if(Input.GetKeyDown(KeyCode.F3))
             {
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
-                serializer.Serialize(GetComponent<PlayerObject>(), Debug.Log);
+                serializer.Serialize(new List<PlayerObject>() { GetComponent<PlayerObject>() }, Debug.Log);
             }
             else if (Input.GetKeyDown(KeyCode.F4))
             {
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
-                var deserializedPlayer = serializer.Deserialize();
-                Debug.Log(deserializedPlayer.GlobalPosition);
+                var deserializedRoot = serializer.Deserialize();
+                Debug.Log(deserializedRoot.Players.FirstOrDefault().GlobalPosition);
             }
         }
 
