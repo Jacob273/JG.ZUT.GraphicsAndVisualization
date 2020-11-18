@@ -38,19 +38,22 @@ namespace Assets.JakubGmur.XMLStructure
 
         private void UpdateInventoryList(PlayerObject player)
         {
-            foreach (var inventoryElement in player.inventory.InventoryList)
+            if (player.inventory != null && player.inventory.InventoryList != null)
             {
-                var type = inventoryElement.GetType();
+                foreach (var inventoryElement in player.inventory.InventoryList)
+                {
+                    var type = inventoryElement.GetType();
 
-                if (type == typeof(PickableData))
-                {
-                    var pickable = inventoryElement as PickableData;
-                    Inventory.List.Add(new SerializablePickable(pickable.HeadUpDisplayObj.gameObject.name));
-                }
-                else if (type == typeof(PickableKey))
-                {
-                    var key = inventoryElement as PickableKey;
-                    Inventory.List.Add(new SerializablePickableKey(key.HeadUpDisplayObj.gameObject.name, key.TargetDoorId));
+                    if (type == typeof(PickableData))
+                    {
+                        var pickable = inventoryElement as PickableData;
+                        Inventory.List.Add(new SerializablePickable(pickable.HeadUpDisplayObj.gameObject.name));
+                    }
+                    else if (type == typeof(PickableKey))
+                    {
+                        var key = inventoryElement as PickableKey;
+                        Inventory.List.Add(new SerializablePickableKey(key.HeadUpDisplayObj.gameObject.name, key.TargetDoorId));
+                    }
                 }
             }
         }

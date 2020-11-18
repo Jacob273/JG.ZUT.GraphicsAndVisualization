@@ -7,6 +7,8 @@ namespace Assets.JakubGmur.Scripts
 {
     public class GameObjectSwitcher : MonoBehaviour
     {
+        public static GameObjectSwitcher Instance = null;
+
         private const int Player1Index = 0;
         private const int Player2Index = 1;
         private const int Player3Index = 2;
@@ -16,6 +18,28 @@ namespace Assets.JakubGmur.Scripts
         public event EventHandler<PlayerObject> OnMainPlayerChanged;
 
         public List<GameObject> playersObjects;
+
+        public List<PlayerObject> GetAllPlayers()
+        {
+            var players = new List<PlayerObject>();
+            foreach(var playerGameObj in playersObjects)
+            {
+                players.Add(playerGameObj.GetComponentInChildren<PlayerObject>());
+            }
+            return players;
+        }
+
+        void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         void Start()
         {

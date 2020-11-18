@@ -65,14 +65,14 @@ namespace Assets.JakubGmur.Scripts
             }
             else if(Input.GetKeyDown(KeyCode.F3))
             {
+                var allPlayers = GameObjectSwitcher.Instance.GetAllPlayers();
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
-                serializer.Serialize(new List<PlayerObject>() { GetComponent<PlayerObject>() }, Debug.Log);
+                serializer.Serialize(allPlayers, Debug.Log);
             }
             else if (Input.GetKeyDown(KeyCode.F4))
             {
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
                 var deserializedRoot = serializer.Deserialize();
-
             }
         }
 

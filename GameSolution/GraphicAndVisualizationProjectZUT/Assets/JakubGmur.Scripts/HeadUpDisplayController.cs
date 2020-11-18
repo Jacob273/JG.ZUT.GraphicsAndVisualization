@@ -8,7 +8,6 @@ namespace Assets.JakubGmur.Scripts
     {
         public List<GameObject> hudImages;
         public GameObject defaultImage;
-        public GameObjectSwitcher gameObjSwitcher;
 
         private string activePlayerName;
         private Dictionary<string, GameObject> playersImages = new Dictionary<string, GameObject>();
@@ -28,7 +27,7 @@ namespace Assets.JakubGmur.Scripts
                 image.SetActive(false);
             }
 
-            foreach (var playerObj in gameObjSwitcher.playersObjects)
+            foreach (var playerObj in GameObjectSwitcher.Instance.playersObjects)
             {
                 var player = playerObj.GetComponentInChildren<PlayerObject>();
                 playersImages.Add(player.name, defaultImage);
@@ -39,7 +38,7 @@ namespace Assets.JakubGmur.Scripts
 
         private void RegisterOnPlayerSwitched()
         {
-            gameObjSwitcher.OnMainPlayerChanged += OnMainPlayerChanged;
+            GameObjectSwitcher.Instance.OnMainPlayerChanged += OnMainPlayerChanged;
         }
 
         private void OnMainPlayerChanged(object sender, PlayerObject e)
@@ -50,7 +49,7 @@ namespace Assets.JakubGmur.Scripts
 
         private void RegisterOnEveryPlayerPicking()
         {
-            foreach (var playerObj in gameObjSwitcher.playersObjects)
+            foreach (var playerObj in GameObjectSwitcher.Instance.playersObjects)
             {
                 var player = playerObj.GetComponentInChildren<PlayerObject>();
                 player.pickingItemsController.LastPickedItemChanged += OnLastPickedChanged;
