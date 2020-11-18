@@ -1,6 +1,5 @@
 ﻿using Assets.JakubGmur.Scripts;
 using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -20,6 +19,19 @@ namespace Assets.JakubGmur.XMLStructure
             GlobalPosition = player.transform.position;
             Id = player.Id;
             Name = player.gameObject.name;
+
+            Inventory = new SerializableInventoryList();
+            foreach (var inventoryElement in player.inventory.InventoryList)
+            {
+                if(inventoryElement is PickableData pickableInventoryElement)
+                {
+                    Inventory.List.Add(new SerializablePickable(pickableInventoryElement.HeadUpDisplayObj.gameObject.name));
+                }
+                else if(inventoryElement is PickableKey key)
+                {
+                    Inventory.List.Add(new SerializablePickableKey(key.TargetDoorId));
+                }
+            }
         }
 
         [XmlElement("Position")]
@@ -31,8 +43,6 @@ namespace Assets.JakubGmur.XMLStructure
         [XmlAttribute("Name")]
         public string Name { get; set; }
 
-
-        [XmlIgnore]
-        public SerializableInventoryList InventoryList { get; set; }
+        public SerializableInventoryList Inventory { get; set; }
     }
 }

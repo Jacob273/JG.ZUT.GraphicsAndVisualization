@@ -7,7 +7,18 @@ namespace Assets.JakubGmur.XMLStructure
     [Serializable]
     public class SerializableInventoryList
     {
-        [XmlElement("InventoryList")]
-        public List<SerializableInventoryItem> InventoryList { get; set; }
+        public SerializableInventoryList()
+        {
+            List = new List<SerializablePickable>();
+        }
+
+        public SerializableInventoryList(List<SerializablePickable> pickableList)
+        {
+            List = pickableList;
+        }
+
+        [XmlElement(typeof(SerializablePickable), ElementName = "InInventoryItem")]
+        [XmlElement(typeof(SerializablePickableKey), ElementName = "InInventoryKey")]
+        public List<SerializablePickable> List { get; set; }
     }
 }
