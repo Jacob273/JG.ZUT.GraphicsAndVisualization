@@ -6,11 +6,26 @@ namespace Assets.JakubGmur.Scripts
 {
     public class HeadUpDisplayController : MonoBehaviour
     {
+        public static HeadUpDisplayController Instance = null;
+
+
         public List<GameObject> hudImages;
         public GameObject defaultImage;
 
         private string activePlayerName;
         private Dictionary<string, GameObject> playersImages = new Dictionary<string, GameObject>();
+
+        void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         public void UpdateActiveImageList(PickedItemEventArgs pickedItemArgs)
         {

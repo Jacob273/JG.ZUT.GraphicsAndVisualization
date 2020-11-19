@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Assets.JakubGmur.XMLStructure;
 using System.Linq;
 using UnityEngine;
 
@@ -45,6 +45,7 @@ namespace Assets.JakubGmur.Scripts
                 if(CanSaveSpawn)
                 {
                     LastSavedSpawnPoint = LastEnteredSpawnPoint;
+                    SerializeAllPlayers();
                     Messenger.Instance.UpdateMessage("Spawn point saved.");
                 }
                 else
@@ -63,17 +64,52 @@ namespace Assets.JakubGmur.Scripts
                     Messenger.Instance.UpdateMessage("Cannot respawn. No spawn points vere visited or saved.", Color.grey);
                 }
             }
-            else if(Input.GetKeyDown(KeyCode.F3))
-            {
-                var allPlayers = GameObjectSwitcher.Instance.GetAllPlayers();
-                PlayersXMLSerializer serializer = new PlayersXMLSerializer();
-                serializer.Serialize(allPlayers, Debug.Log);
-            }
             else if (Input.GetKeyDown(KeyCode.F4))
             {
                 PlayersXMLSerializer serializer = new PlayersXMLSerializer();
                 var deserializedRoot = serializer.Deserialize();
+                RestoreAllPlayersPositionAndInventory(deserializedRoot);
             }
+        }
+
+        private static void RestoreAllPlayersPositionAndInventory(XmlRoot deserializedRoot)
+        {
+            foreach (var player in GameObjectSwitcher.Instance.GetAllPlayers())
+            {
+                var deserializedPlayerData = deserializedRoot.Players.List
+                                                             .Where(x => x.Id == player.Id)
+                                                             .FirstOrDefault();
+                player.gameObject.transform.position = deserializedPlayerData.GlobalPosition;
+                BuildInventory(player, deserializedPlayerData);
+            }
+        }
+
+        private static void BuildInventory(PlayerObject player, SerializablePlayer deserializedPlayerData)
+        {
+            if (player.inventory != null && player.inventory.InventoryList != null)
+            {
+                foreach (var deserializedInventoryItem in deserializedPlayerData.Inventory.List)
+                {
+                    var type = deserializedInventoryItem.GetType();
+                    if (type == typeof(PickableData))
+                    {
+                        var deserializedPickable = deserializedInventoryItem as SerializablePickable;
+                        player.inventory.InventoryList.Add(new PickableData(deserializedPickable.HeadUpName));
+                    }
+                    else if (type == typeof(PickableKey))
+                    {
+                        var deserializedKey = deserializedInventoryItem as SerializablePickableKey;
+                        player.inventory.InventoryList.Add(new PickableKey(deserializedKey.HeadUpName, deserializedKey.TargetDoorId));
+                    }
+                }
+
+            }        }
+
+        private static void SerializeAllPlayers()
+        {
+            var allPlayers = GameObjectSwitcher.Instance.GetAllPlayers();
+            PlayersXMLSerializer serializer = new PlayersXMLSerializer();
+            serializer.Serialize(allPlayers, Debug.Log);
         }
 
         public bool Respawn()
