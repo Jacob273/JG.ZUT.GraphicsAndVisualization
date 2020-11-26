@@ -26,6 +26,8 @@ A project related to computer graphics and visualization for educational purpose
   ### 4. User interface + Gameplay extended
   
   * https://youtu.be/bHvUSWXidTQ
+  * https://youtu.be/cDC1pwbgKBs 
+  * https://youtu.be/tAy-0KzqGzo
   
 Game demo was extended with following:
 - Main application view
@@ -35,5 +37,9 @@ Game demo was extended with following:
 - Text about current situation in game, which is displayed on the bottom of the screen (about quests/picked items/other informations)
 - Text with player name and health points
 - Quest which is finished when two specific enemies are killed
+- Possibility to save game when players enters the save zone
+- Respawning in save zone
+- Saving functionality does include serialization(to XML file) of players positions at given point in time and their inventories which consits of items that they have picked up during the game
+- Respawning functionality does include deserialization of XML file if game was saved and update of all players positions & inventories
 
   ![user interface and gameplay extended](./UnityAdventureGame.jpg)
